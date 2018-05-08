@@ -1,0 +1,15 @@
+.mat-grid-list {
+  width: 100%
+}
+.mat-selection-list {
+  width: 100%;
+}
+.selection-list {
+  width: 100%;
+  position: sticky;
+  top: 80px;
+}
+.mat-form-field {
+  width: 90%;
+  padding-left: 15px;
+}

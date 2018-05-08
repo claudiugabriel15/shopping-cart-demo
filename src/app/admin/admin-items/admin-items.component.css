@@ -1,0 +1,11 @@
+.full-width-input {
+  width: 100%;
+}
+
+.filter-input {
+  margin-top: 10px;
+}
+
+.mat-row.even-row {
+  background-color: rgba(0,0,0,.04);
+}

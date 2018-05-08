@@ -1,0 +1,55 @@
+
+<div fxFlex fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="60">
+    <button mat-raised-button color="primary" routerLink="add">Add Item</button>
+
+    <div fxFlex="100" class="filter-input">
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Search" #search
+          (keyup)="applyFilter($event.target.value)">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="search.value != ''" (
+          click)="applyFilter('');search.value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button color="primary" mat-button routerLink="{{element.id}}">Edit</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [ngClass]="{'even-row': i % 2 === 0}"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,8 @@
+.mat-card {
+  width: 300px;
+}
+
+.item-count>.mat-icon {
+  margin-top: 7px;
+  vertical-align: bottom;
+}

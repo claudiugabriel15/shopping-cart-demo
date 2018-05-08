@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~material-design-icons/iconfont/material-icons.css';
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+
+body {
+  margin: 0px;
+}
+
+.mat-snack-bar-container.success {
+  background: green;
+}
+
+.mat-snack-bar-container.error {
+  background: #f44336;
+}
+
+.validation-error {
+  color: #f44336;
+}
+

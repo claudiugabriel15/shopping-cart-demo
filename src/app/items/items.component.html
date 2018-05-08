@@ -1,0 +1,24 @@
+<div fxFlex="100" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign="space-between start">
+  <div fxFlex ="100" fxFlex.gt-md="20" class="selection-list">
+    <mat-selection-list  #selectedTypes (selectionChange)="navigateByType(selectedTypes.selectedOptions.selected, $event)">
+      <mat-list-option value="All" [selected]="isTypeSelected('All')">
+        All
+      </mat-list-option>
+      <mat-list-option *ngFor="let type of types | async" [value]="type.name" [selected]="isTypeSelected(type.name)">
+        {{ type.name }}
+      </mat-list-option>
+    </mat-selection-list>
+    <mat-form-field>
+      <input matInput placeholder="Search" [(ngModel)]="searchInput" (keyup)="addSearchParam()" >
+      <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput = ''; addSearchParam()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <mat-grid-list cols="3" rowHeight="500px" fxFlex="100" fxFlex.gt-md="75">
+    <mat-grid-tile *ngFor="let item of items">
+      <app-item-card [data]="item" [itemCount]="itemCount" (add)="addToCart(item.id)" (remove)="removeFromCart(item.id)"></app-item-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
