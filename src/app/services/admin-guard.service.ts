@@ -2,7 +2,6 @@ import { FirebaseUserService } from './firebase-user.service';
 import { Injectable } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router, CanActivate, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { QueryParams } from '@firebase/database/dist/esm/src/core/view/QueryParams';
 
 @Injectable()
 export class AdminGuardService implements CanActivate {

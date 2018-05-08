@@ -1,3 +1,4 @@
+import { FirebaseShoppingCartService } from './../services/firebase-shopping-cart.service';
 import { FirebaseItemService } from './../services/firebase-item.service';
 import { Component } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -7,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import 'rxjs/operators/take';
 import * as _ from 'lodash';
+import { Item } from '../models/item';
 
 @Component({
   selector: 'app-items',
@@ -24,7 +26,8 @@ export class ItemsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private db: AngularFireDatabase,
-    private firebaseItemService: FirebaseItemService) {
+    private firebaseItemService: FirebaseItemService,
+    private shoppingCartService: FirebaseShoppingCartService) {
       this.types = this.firebaseItemService.getTypes();
 
       // get params in order to update UI
@@ -79,16 +82,11 @@ export class ItemsComponent {
     this.router.navigate(['/'], { queryParams: newQueryParams });
   }
 
-  addToCart(id: string) {
-    // this.itemCount++;
-
-    const shoppingCartId = localStorage.getItem('shoppingCartId');
-    if (!shoppingCartId) {
-
-    }
+  addToCart(item: Item) {
+    this.shoppingCartService.addItem(item);
   }
 
-  removeFromCart(id: string) {
-    this.itemCount--;
+  removeFromCart(item: Item) {
+    this.shoppingCartService.removeItem(item);
   }
 }

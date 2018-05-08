@@ -1,3 +1,76 @@
-<p>
-  shopping-cart works!
-</p>
+
+<div fxFlex fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="60">
+
+      <div fxFlex="100" class="filter-input">
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Search" #search
+            (keyup)="applyFilter($event.target.value)">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="search.value != ''" (
+            click)="applyFilter('');search.value = ''">
+            <mat-icon>close</mat-icon>
+          </button>
+      </mat-form-field>
+      </div>
+
+      <mat-table #table [dataSource]="dataSource" matSort mat-elevation-z8>
+
+        <ng-container matColumnDef="image">
+          <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <img class="item-image" [src]="element.imageURL" alt="Image not found">
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Unit Price </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="item-quantity">
+              {{ element.quantity }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="total_price">
+          <mat-header-cell *matHeaderCellDef> Total Price </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.price * element.quantity | number:'1.2' }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="clear">
+          <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+          <mat-cell *matCellDef="let element"  fxLayout="column" fxLayoutAlign="end center">
+            <button mat-icon-button matTooltip="Add one item of this type">
+              <mat-icon aria-label="Add item" (click)="addItem(element)">add</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Remove all items of this type">
+              <mat-icon aria-label="Clear all" (click)="clearAll(element)">clear</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Remove one item of this type">
+              <mat-icon aria-label="Remove item" (click)="removeItem(element)">remove</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [ngClass]="{'even-row': i % 2 === 0}"></mat-row>
+      </mat-table>
+
+      <div class="cost-section">Total cost: {{ (totalCost | async) || 0 | number:'1.2' }}</div>
+
+      <mat-paginator #paginator
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 20]"
+                     [showFirstLastButtons]="true">
+      </mat-paginator>
+    </div>
+  </div>

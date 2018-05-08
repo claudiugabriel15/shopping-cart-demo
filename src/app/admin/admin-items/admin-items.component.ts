@@ -39,8 +39,4 @@ export class AdminItemsComponent {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-
-  log(obj: any) {
-    console.log(obj);
-  }
 }

@@ -5,6 +5,7 @@ export class Item {
   public imageURL?: string;
   public description?: string;
   public id?: string;
+  public quantity?: number;
 
   constructor(item: any) {
     this.name = item.name || '';
@@ -13,5 +14,6 @@ export class Item {
     this.imageURL = item.imageURL || '';
     this.description = item.description || '';
     this.id = item.id || '';
+    this.quantity = item.quantity || 0;
   }
 }

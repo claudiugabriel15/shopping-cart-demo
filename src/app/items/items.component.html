@@ -18,7 +18,7 @@
 
   <mat-grid-list cols="3" rowHeight="500px" fxFlex="100" fxFlex.gt-md="75">
     <mat-grid-tile *ngFor="let item of items">
-      <app-item-card [data]="item" [itemCount]="itemCount" (add)="addToCart(item.id)" (remove)="removeFromCart(item.id)"></app-item-card>
+      <app-item-card [data]="item" quantity="true" (add)="addToCart(item)" (remove)="removeFromCart(item)"></app-item-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

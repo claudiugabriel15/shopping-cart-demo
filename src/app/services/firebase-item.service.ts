@@ -20,7 +20,7 @@ export class FirebaseItemService {
   getItemList(types?: string[], search?: string) {
     return this.db.object('/items').valueChanges().map(
       (items) => {
-        let alteredItemArray: Item[] = [];
+        const alteredItemArray: Item[] = [];
         _.each(items, (value, key) => {
           const item = new Item(value);
           item.id = key;

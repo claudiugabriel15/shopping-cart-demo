@@ -1,0 +1,39 @@
+.full-width-input {
+  width: 100%;
+}
+
+.filter-input {
+  margin-top: 10px;
+}
+
+.mat-row.even-row {
+  background-color: rgba(0,0,0,.04);
+}
+
+.item-image {
+  margin: 5px 0;
+  vertical-align: middle;
+  height: 100px;
+  width: 100px;
+  border: 2px solid lightgray;
+  border-radius: 100%;
+}
+
+.item-quantity {
+  vertical-align: middle;
+  height: 40px;
+  width: 40px;
+  border: 2px solid lightgray;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 3;
+  font-weight: bold;
+}
+
+.cost-section {
+  margin-top: 20px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+

@@ -1,5 +1,6 @@
 import { AlertService } from './services/alert.service';
 import { FirebaseUserService } from './services/firebase-user.service';
+import { FirebaseShoppingCartService } from './services/firebase-shopping-cart.service';
 import { AdminGuardService } from './services/admin-guard.service';
 // Angular Modules
 import { BrowserModule } from '@angular/platform-browser';
@@ -56,6 +57,7 @@ import { FirebaseItemService } from './services/firebase-item.service';
 import { ItemCardComponent } from './item-card/item-card.component';
 // tslint:disable-next-line:max-line-length
 import { AdminItemsDeleteConfirmationComponent } from './admin/admin-items-edit/admin-items-delete-confirmation/admin-items-delete-confirmation.component';
+import { MatTooltipModule } from '@angular/material';
 
 const APP_ROUTES = [
   {
@@ -158,6 +160,7 @@ const APP_ROUTES = [
     MatDialogModule,
     MatListModule,
     MatGridListModule,
+    MatTooltipModule,
 
     // Flex Modules
     FlexLayoutModule,
@@ -175,6 +178,7 @@ const APP_ROUTES = [
     AuthGuardService,
     FirebaseUserService,
     FirebaseItemService,
+    FirebaseShoppingCartService,
   ],
   bootstrap: [AppComponent]
 })
