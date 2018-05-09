@@ -1,6 +1,6 @@
 
 <div fxFlex fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex="60">
+    <div fxFlex.sm="100" fxFlex.gt-sm="60">
 
       <div fxFlex="100" class="filter-input">
         <mat-form-field class="full-width-input">
@@ -13,7 +13,7 @@
       </mat-form-field>
       </div>
 
-      <mat-table #table [dataSource]="dataSource" matSort mat-elevation-z8>
+      <mat-table #table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
@@ -35,9 +35,8 @@
         <ng-container matColumnDef="quantity">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <div class="item-quantity">
-              {{ element.quantity }}
-            </div>
+            <input class="item-quantity" matInput [(ngModel)]="element.quantity" type="number" min="1" max="9999"
+            (change)="addItem(element, element.quantity)" (keyup)="addItem(element, element.quantity)">
           </mat-cell>
         </ng-container>
 
@@ -49,14 +48,8 @@
         <ng-container matColumnDef="clear">
           <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
           <mat-cell *matCellDef="let element"  fxLayout="column" fxLayoutAlign="end center">
-            <button mat-icon-button matTooltip="Add one item of this type">
-              <mat-icon aria-label="Add item" (click)="addItem(element)">add</mat-icon>
-            </button>
             <button mat-icon-button matTooltip="Remove all items of this type">
               <mat-icon aria-label="Clear all" (click)="clearAll(element)">clear</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Remove one item of this type">
-              <mat-icon aria-label="Remove item" (click)="removeItem(element)">remove</mat-icon>
             </button>
           </mat-cell>
         </ng-container>

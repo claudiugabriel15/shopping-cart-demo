@@ -1,22 +1,44 @@
 <div fxFlex="100" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign="space-between start">
-  <div fxFlex ="100" fxFlex.gt-md="20" class="selection-list">
-    <mat-selection-list  #selectedTypes (selectionChange)="navigateByType(selectedTypes.selectedOptions.selected, $event)">
-      <mat-list-option value="All" [selected]="isTypeSelected('All')">
-        All
-      </mat-list-option>
-      <mat-list-option *ngFor="let type of types | async" [value]="type.name" [selected]="isTypeSelected(type.name)">
-        {{ type.name }}
-      </mat-list-option>
-    </mat-selection-list>
-    <mat-form-field>
-      <input matInput placeholder="Search" [(ngModel)]="searchInput" (keyup)="addSearchParam()" >
-      <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput = ''; addSearchParam()">
-        <mat-icon>close</mat-icon>
+  <div class="selection-list mat-elevation-z8">
+    <div fxLayout.gt-md="row">
+      <div [class.is-side-hidden]="isSideHidden && screenWidth >= 1280" fxFlex.gt-md="100" [hidden]="isHidden && screenWidth < 1280">
+        <mat-form-field >
+          <input matInput placeholder="Search" [(ngModel)]="searchInput" (keyup)="addSearchParam()">
+          <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput = ''; addSearchParam()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-selection-list  #selectedTypes (selectionChange)="navigateByType(selectedTypes.selectedOptions.selected, $event)">
+          <mat-list-option value="All" [selected]="isTypeSelected('All')">
+            All
+          </mat-list-option>
+          <mat-list-option *ngFor="let type of types | async" [value]="type.name" [selected]="isTypeSelected(type.name)">
+            {{ type.name }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+
+      <div fxHide fxShow.gt-md fxLayout="column" fxLayoutAlign="center center">
+        <button *ngIf="!isSideHidden" mat-icon-button (click)="isSideHidden = !isSideHidden; setColumnNo()" class="expand_side_button">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button *ngIf="isSideHidden" mat-icon-button (click)="isSideHidden = !isSideHidden; setColumnNo()" class="expand_side_button">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div fxShow fxHide.gt-md fxLayout="row" fxLayoutAlign="center center">
+      <button *ngIf="!isHidden" mat-button (click)="isHidden = !isHidden" class="expand_button">
+        <mat-icon>expand_less</mat-icon>
       </button>
-    </mat-form-field>
+      <button *ngIf="isHidden" mat-button (click)="isHidden = !isHidden" class="expand_button">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+    </div>
   </div>
 
-  <mat-grid-list cols="3" rowHeight="500px" fxFlex="100" fxFlex.gt-md="75">
+  <mat-grid-list #gridList [cols]="columnNo" rowHeight="500px" fxFlex="100" gutterSize="10px">
     <mat-grid-tile *ngFor="let item of items">
       <app-item-card [data]="item" quantity="true" (add)="addToCart(item)" (remove)="removeFromCart(item)"></app-item-card>
     </mat-grid-tile>

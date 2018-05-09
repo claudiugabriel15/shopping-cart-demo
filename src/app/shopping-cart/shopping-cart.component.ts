@@ -46,8 +46,8 @@ export class ShoppingCartComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  addItem(item: Item) {
-    this.firebaseShoppingCartService.addItem(item);
+  addItem(item: Item, quantity?: number) {
+    this.firebaseShoppingCartService.addItem(item, quantity);
   }
 
   removeItem(item: Item) {

@@ -1,6 +1,6 @@
 import { FirebaseShoppingCartService } from './../services/firebase-shopping-cart.service';
 import { FirebaseItemService } from './../services/firebase-item.service';
-import { Component } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { MatSelectionListChange } from '@angular/material/list';
@@ -13,14 +13,26 @@ import { Item } from '../models/item';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css']
+  styleUrls: ['./items.component.css'],
 })
+
 export class ItemsComponent {
   items: any;
   types: Observable<any[]>;
   searchInput: string;
   selectedTypes: string[];
   itemCount = 0;
+  screenWidth: number;
+  isHidden = false;
+  isSideHidden = false;
+  columnNo = 1;
+
+  @ViewChild('gridList') gridListElem: ElementRef;
+
+  @HostListener('window:resize', ['$event']) onResize(event) {
+    this.screenWidth = event.target.innerWidth;
+    this.setColumnNo();
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +58,9 @@ export class ItemsComponent {
           (items) => this.items = items
         );
       });
+
+      this.screenWidth = window.innerWidth;
+      this.setColumnNo();
   }
 
   navigateByType(selectedOptions: any, currentlySelected: MatSelectionListChange) {
@@ -88,5 +103,14 @@ export class ItemsComponent {
 
   removeFromCart(item: Item) {
     this.shoppingCartService.removeItem(item);
+  }
+
+  setColumnNo() {
+    setTimeout(() => {
+      const elementWidth = _.get(this, 'gridListElem._element.nativeElement.offsetWidth', null);
+      if (elementWidth) {
+        this.columnNo =  Math.floor(elementWidth / 450);
+      }
+    });
   }
 }

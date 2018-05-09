@@ -29,7 +29,7 @@
 
     <button mat-button [matMenuTriggerFor]="appMenu" *ngIf="loggedUser$ | async; else userNotLogged">
       <img class="user-image" [src]="(loggedUser$ | async)?.photoURL">
-      {{ (loggedUser$ | async)?.displayName }}
+      <span class="user-name" fxHide fxShow.gt-xs>{{ (loggedUser$ | async)?.displayName }} </span>
       <i class="material-icons">keyboard_arrow_down</i>
     </button>
   </div>
