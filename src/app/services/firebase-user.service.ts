@@ -7,13 +7,14 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @Injectable()
 export class FirebaseUserService {
   user: firebase.User;
+  public isAdmin$: any;
 
   constructor(
     private db: AngularFireDatabase,
     private angularFireAuth: AngularFireAuth) {}
 
-  save(user: firebase.User) {
-    this.db.object('/users/' + user.uid).update({
+  save(user: firebase.User): Promise<any> {
+    return this.db.object('/users/' + user.uid).update({
       name: user.displayName,
       email: user.email
     }).then(() => {
@@ -22,20 +23,13 @@ export class FirebaseUserService {
         name: user.displayName,
         uid: user.uid
       }));
+
+      this.isAdmin$ = this.db.object('/roles/admins/' + user.uid).valueChanges();
+
+      return new Promise((resolve, reject) => {
+        resolve(true);
+        reject(false);
+      });
     });
-  }
-
-  isAdmin() {
-    const currentUser = JSON.parse(localStorage.getItem('user'));
-
-    if (currentUser && currentUser.uid) {
-      return this.db.object('/roles/admins/' + currentUser.uid).valueChanges();
-    }
-
-    return Observable.create(observer => {
-      observer.next(false);
-      observer.complete();
-    });
-
   }
 }

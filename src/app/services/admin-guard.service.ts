@@ -13,7 +13,7 @@ export class AdminGuardService implements CanActivate {
     private firebaseUserService: FirebaseUserService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.firebaseUserService.isAdmin().map(
+    return this.firebaseUserService.isAdmin$.map(
       isAdmin => {
         if (isAdmin) {
           return true;

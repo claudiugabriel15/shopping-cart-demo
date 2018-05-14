@@ -20,10 +20,7 @@ export class MainNavbarComponent {
     public firebaseUserService: FirebaseUserService,
     public firebaseShoppingCartService: FirebaseShoppingCartService) {
       this.loggedUser$ = loginService.userData$;
-      this.firebaseUserService.isAdmin().subscribe(
-        isAdmin => {
-          this.isAdmin = isAdmin;
-        });
+      // this.isAdmin = this.firebaseUserService.isAdmin$;
       this.itemQuantity = firebaseShoppingCartService.getAllItemQuantity();
     }
 

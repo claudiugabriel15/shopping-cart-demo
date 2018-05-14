@@ -1,3 +1,4 @@
+import { isDevMode } from '@angular/core';
 import { AlertService } from './services/alert.service';
 import { FirebaseUserService } from './services/firebase-user.service';
 import { FirebaseShoppingCartService } from './services/firebase-shopping-cart.service';
@@ -65,8 +66,7 @@ import { ItemCardComponent } from './shared/item-card/item-card.component';
 import { EnhancedTableComponent } from './shared/enhanced-table/enhanced-table.component';
 
 // Environment
-import { environment } from '../environments/environment.prod';
-
+import { environment } from '../environments/environment';
 
 const APP_ROUTES = [
   {

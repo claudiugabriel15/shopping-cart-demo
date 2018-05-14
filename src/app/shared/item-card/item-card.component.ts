@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./item-card.component.css']
 })
 export class ItemCardComponent implements OnInit {
-  @Input('data') data: any;
-  @Input('quantity') quantity: boolean;
+  @Input() data: any;
+  @Input() quantity: boolean;
 
   @Output('remove') remove = new EventEmitter<any>();
   @Output('add') add = new EventEmitter<any>();
