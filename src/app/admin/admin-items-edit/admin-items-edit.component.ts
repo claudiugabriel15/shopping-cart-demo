@@ -3,24 +3,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from './../../models/item';
 import { Observable } from '@firebase/util';
 import { FirebaseItemService } from './../../services/firebase-item.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/take';
 import { AdminItemsDeleteConfirmationComponent } from './admin-items-delete-confirmation/admin-items-delete-confirmation.component';
+import { FirebaseTypeService } from '../../services/firebase-type.service';
 
 @Component({
   selector: 'app-admin-items-edit',
   templateUrl: './admin-items-edit.component.html',
   styleUrls: ['./admin-items-edit.component.css']
 })
-export class AdminItemsEditComponent implements OnInit {
+export class AdminItemsEditComponent {
   data: Item = new Item({});
   types: any;
 
   constructor(
     private firebaseItemService: FirebaseItemService,
+    private firebaseTypeService: FirebaseTypeService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private alertService: AlertService,
@@ -32,10 +34,7 @@ export class AdminItemsEditComponent implements OnInit {
       this.getItemData(id);
     }
 
-    this.types = this.firebaseItemService.getTypes();
-  }
-
-  ngOnInit() {
+    this.types = this.firebaseTypeService.getTypes();
   }
 
   submit(f: any) {
@@ -59,7 +58,6 @@ export class AdminItemsEditComponent implements OnInit {
   }
 
   removeItem() {
-
     const dialogRef = this.dialog.open(AdminItemsDeleteConfirmationComponent, {
       width: '250px',
       data: { name: this.data.name }

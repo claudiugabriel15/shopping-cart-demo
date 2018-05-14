@@ -60,8 +60,4 @@ export class FirebaseItemService {
   removetItem(id: string) {
     return this.db.object('/items/' + id).remove();
   }
-
-  getTypes() {
-    return this.db.list('/types').valueChanges().map(types => types);
-  }
 }

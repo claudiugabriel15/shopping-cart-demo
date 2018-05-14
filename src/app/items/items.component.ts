@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/operators/take';
 import * as _ from 'lodash';
 import { Item } from '../models/item';
+import { FirebaseTypeService } from '../services/firebase-type.service';
 
 @Component({
   selector: 'app-items',
@@ -39,8 +40,9 @@ export class ItemsComponent {
     private router: Router,
     private db: AngularFireDatabase,
     private firebaseItemService: FirebaseItemService,
+    private firebaseTypeService: FirebaseTypeService,
     private shoppingCartService: FirebaseShoppingCartService) {
-      this.types = this.firebaseItemService.getTypes();
+      this.types = this.firebaseTypeService.getTypes();
 
       // get params in order to update UI
       this.searchInput = this.route.snapshot.queryParams.search || '';

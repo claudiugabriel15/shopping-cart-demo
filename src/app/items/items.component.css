@@ -25,6 +25,12 @@
   width: 30px;
 }
 
+@media screen and (min-width: 1280px) {
+  .selection-list {
+    padding: 20px 0px;
+  }
+}
+
 @media screen and (max-width: 1280px) {
   .selection-list {
     top: 65px;

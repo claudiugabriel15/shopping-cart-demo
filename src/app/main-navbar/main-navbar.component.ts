@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 export class MainNavbarComponent {
   authState: any;
   loggedUser$: Observable<any>;
-  isAdmin: boolean;
+  isAdmin: any;
   itemQuantity: Observable<number>;
 
   constructor(
@@ -20,16 +20,13 @@ export class MainNavbarComponent {
     public firebaseUserService: FirebaseUserService,
     public firebaseShoppingCartService: FirebaseShoppingCartService) {
       this.loggedUser$ = loginService.userData$;
-      this.firebaseUserService.isAdmin$.subscribe(
-        isAdmin => this.isAdmin = isAdmin
-      );
-
+      this.firebaseUserService.isAdmin().subscribe(
+        isAdmin => {
+          this.isAdmin = isAdmin;
+        });
       this.itemQuantity = firebaseShoppingCartService.getAllItemQuantity();
     }
 
-  logthis(logger) {
-    console.log(logger);
-  }
   logout() {
     this.loginService.signOut();
   }

@@ -1,3 +1,4 @@
+import { FirebaseTypeService } from './../../services/firebase-type.service';
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../../models/item';
 import { FirebaseItemService } from '../../services/firebase-item.service';
@@ -14,10 +15,11 @@ export class AdminItemsAddComponent implements OnInit {
 
   constructor(
     private firebaseItemService: FirebaseItemService,
+    private firebaseTypeService: FirebaseTypeService,
     private alertservice: AlertService
   ) {
     this.newItem = new Item({});
-    this.types = this.firebaseItemService.getTypes();
+    this.types = this.firebaseTypeService.getTypes();
   }
 
   ngOnInit() {

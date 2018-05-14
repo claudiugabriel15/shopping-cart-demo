@@ -25,18 +25,17 @@ export class FirebaseUserService {
     });
   }
 
-  get isAdmin$(): Observable<any> {
-    return new Observable((observer) => {
-      const currentUser = JSON.parse(localStorage.getItem('user'));
-      if (currentUser && currentUser.uid) {
-        return this.db.object('/roles/admins/' + currentUser.uid)
-          .valueChanges()
-          .subscribe((isAdmin) => {
-            observer.next(isAdmin);
-          });
-      } else {
-        observer.next(false);
-      }
+  isAdmin() {
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+
+    if (currentUser && currentUser.uid) {
+      return this.db.object('/roles/admins/' + currentUser.uid).valueChanges();
+    }
+
+    return Observable.create(observer => {
+      observer.next(false);
+      observer.complete();
     });
+
   }
 }

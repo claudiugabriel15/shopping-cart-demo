@@ -1,4 +1,4 @@
-import { FirebaseShoppingCartService } from './../services/firebase-shopping-cart.service';
+import { FirebaseShoppingCartService } from './../../services/firebase-shopping-cart.service';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, SimpleChange } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -8,8 +8,9 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./item-card.component.css']
 })
 export class ItemCardComponent implements OnInit {
-  @Input('data') data: any = {};
+  @Input('data') data: any;
   @Input('quantity') quantity: boolean;
+
   @Output('remove') remove = new EventEmitter<any>();
   @Output('add') add = new EventEmitter<any>();
 

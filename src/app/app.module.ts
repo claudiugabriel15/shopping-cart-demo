@@ -43,9 +43,6 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { AdminItemsComponent } from './admin/admin-items/admin-items.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
-
-// Environment
-import { environment } from '../environments/environment.prod';
 import { OrdersComponent } from './my/orders/orders.component';
 import { LoginService } from './services/login.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -54,10 +51,22 @@ import { AdminItemsEditComponent } from './admin/admin-items-edit/admin-items-ed
 import { FormsModule } from '@angular/forms';
 import { AdminItemsAddComponent } from './admin/admin-items-add/admin-items-add.component';
 import { FirebaseItemService } from './services/firebase-item.service';
-import { ItemCardComponent } from './item-card/item-card.component';
+
 // tslint:disable-next-line:max-line-length
 import { AdminItemsDeleteConfirmationComponent } from './admin/admin-items-edit/admin-items-delete-confirmation/admin-items-delete-confirmation.component';
 import { MatTooltipModule } from '@angular/material';
+import { AdminTypesComponent } from './admin/admin-types/admin-types.component';
+import { FirebaseTypeService } from './services/firebase-type.service';
+// tslint:disable-next-line:max-line-length
+import { AdminItemTypesDeleteConfirmationComponent } from './admin/admin-types/admin-item-types-delete-confirmation/admin-item-types-delete-confirmation.component';
+
+// Shared components
+import { ItemCardComponent } from './shared/item-card/item-card.component';
+import { EnhancedTableComponent } from './shared/enhanced-table/enhanced-table.component';
+
+// Environment
+import { environment } from '../environments/environment.prod';
+
 
 const APP_ROUTES = [
   {
@@ -106,6 +115,11 @@ const APP_ROUTES = [
     canActivate: [ AuthGuardService, AdminGuardService ]
   },
   {
+    path: 'admin/types',
+    component: AdminTypesComponent,
+    canActivate: [ AuthGuardService, AdminGuardService ]
+  },
+  {
     path: 'admin/orders',
     component: AdminOrdersComponent,
     canActivate: [ AuthGuardService, AdminGuardService ]
@@ -136,6 +150,9 @@ const APP_ROUTES = [
     AdminItemsAddComponent,
     ItemCardComponent,
     AdminItemsDeleteConfirmationComponent,
+    AdminTypesComponent,
+    AdminItemTypesDeleteConfirmationComponent,
+    EnhancedTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -169,7 +186,10 @@ const APP_ROUTES = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
   ],
-  entryComponents: [AdminItemsDeleteConfirmationComponent],
+  entryComponents: [
+    AdminItemsDeleteConfirmationComponent,
+    AdminItemTypesDeleteConfirmationComponent,
+  ],
   providers: [
     AngularFireAuth,
     LoginService,
@@ -178,6 +198,7 @@ const APP_ROUTES = [
     AuthGuardService,
     FirebaseUserService,
     FirebaseItemService,
+    FirebaseTypeService,
     FirebaseShoppingCartService,
   ],
   bootstrap: [AppComponent]

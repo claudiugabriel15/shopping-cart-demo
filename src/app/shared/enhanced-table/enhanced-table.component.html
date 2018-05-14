@@ -1,0 +1,50 @@
+<div fxFlex fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="90" fxFlex.gt-sm="60">
+    <div fxFlex="100" class="filter-input">
+      <ng-content></ng-content>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Search" #search (keyup)="applyFilter($event.target.value)">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="search.value.length > 0" (click)="applyFilter('');search.value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column.name">
+        <mat-header-cell *matHeaderCellDef [fxFlex]="column.width">{{ column.displayName }}</mat-header-cell>
+        <mat-cell *matCellDef="let element" [fxFlex]="column.width">
+
+          <span *ngIf="element[column.name] && !column.editable && !column.expression">{{ element[column.name] }}</span>
+
+          <span *ngIf="column.expression">{{ evalExpression(element, column.expression) }}</span>
+
+          <button *ngIf="column.name === 'delete'" color="primary" mat-icon-button>
+            <mat-icon aria-label="Delete" (click)="removeItem(element)">clear</mat-icon>
+          </button>
+
+          <div *ngIf="column.name === 'edit'">
+            <button color="primary" fxFlex fxHide fxShow.gt-sm mat-button [routerLink]="element.id"> Edit </button>
+            <button color="primary" class="edit-button-mobile" fxFlex fxShow fxHide.gt-sm mat-button [routerLink]="element.id"> .. </button>
+          </div>
+
+          <img *ngIf="column.name === 'image'" class="item-image" [src]="element.imageURL" alt="Image not found">
+
+          <input *ngIf="column.editable === true" class="item-quantity" matInput [(ngModel)]="element.quantity" type="number" min="1" max="9999"
+            (change)="editItem(element)" (keyup)="editItem(element)">
+
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [ngClass]="{'even-row': i % 2 === 0}"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                    [pageSize]="10"
+                    [pageSizeOptions]="[5, 10, 20]"
+                    [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+</div>
+

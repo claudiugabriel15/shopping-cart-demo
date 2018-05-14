@@ -1,6 +1,6 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="70" fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center stretch">
-      <form #f="ngForm"fxFlex fxLayout="column" fxLayoutAlign="space-between start">
+      <form #f="ngForm" fxFlex fxLayout="column" fxLayoutAlign="space-between start">
         <div>
           <mat-form-field>
             <input matInput type="text" placeholder="Name" [(ngModel)]="newItem.name" name="name" #name="ngModel" required>
@@ -9,7 +9,7 @@
 
           <mat-form-field>
             <mat-select placeholder="Type" [(ngModel)]="newItem.type" name="type" #type="ngModel" required>
-              <mat-option *ngFor="let type of types | async" [value]="type.name">
+              <mat-option *ngFor="let type of types | async" [value]="type.id">
                 {{ type.name }}
               </mat-option>
             </mat-select>
@@ -17,14 +17,14 @@
           </mat-form-field>
 
           <mat-form-field>
-              <span matPrefix>$ &nbsp;</span>
-              <input matInput type="number" placeholder="Price" [(ngModel)]="newItem.price" name="price" step="0.01" #price="ngModel"
-              pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" required>
-              <mat-hint *ngIf="price.touched && price.invalid" align="start">
-                <strong *ngIf="price?.errors.required"  class="validation-error">Field is required.</strong>
-                <strong *ngIf="price?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
-              </mat-hint>
-            </mat-form-field>
+            <span matPrefix>$ &nbsp;</span>
+            <input matInput type="number" placeholder="Price" [(ngModel)]="newItem.price" name="price" step="0.01" #price="ngModel"
+            pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" required>
+            <mat-hint *ngIf="price.touched && price.invalid" align="start">
+              <strong *ngIf="price?.errors.required"  class="validation-error">Field is required.</strong>
+              <strong *ngIf="price?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
+            </mat-hint>
+          </mat-form-field>
 
           <mat-form-field>
             <input matInput type="url" placeholder="Image URL" [(ngModel)]="newItem.imageURL" name="imageURL">
@@ -38,7 +38,7 @@
           </mat-form-field>
         </div>
         <div>
-            <button mat-raised-button color="primary" [disabled]="!f.dirty || !f.valid" (click)="submit(f)">Add</button>
+          <button mat-raised-button color="primary" [disabled]="!f.dirty || !f.valid" (click)="submit(f)">Add</button>
         </div>
       </form>
     </div>

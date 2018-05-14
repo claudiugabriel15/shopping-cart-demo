@@ -1,0 +1,35 @@
+.full-width-input {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.filter-input {
+  margin-top: 10px;
+}
+
+.mat-row.even-row {
+  background-color: rgba(0,0,0,.04);
+}
+
+.edit-button-mobile {
+  text-align: left;
+}
+
+.item-image {
+  margin: 5px 0;
+  vertical-align: middle;
+  max-height: 100%;
+  max-width: 83%;
+  border: 2px solid lightgray;
+}
+
+@media screen and (max-width: 600px) {
+  .mat-cell {
+    font-size: 10px;
+  }
+
+  .mat-header-cell {
+    font-size: 10px;
+  }
+
+}

@@ -1,8 +1,6 @@
 import { FirebaseItemService } from './../../services/firebase-item.service';
 import { Component, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+import { EnhancedTableColumn } from '../../shared/enhanced-table/enhanced-table-column';
 
 @Component({
   selector: 'app-admin-items',
@@ -10,33 +8,36 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./admin-items.component.css']
 })
 export class AdminItemsComponent {
-  displayedColumns = [
-    'id',
-    'name',
-    'price',
-    'edit'
+  columns: EnhancedTableColumn[] = [
+    {
+      'name': 'id',
+      'displayName': 'Id',
+      'width': 35,
+      'sort': true,
+    },
+    {
+      'name': 'name',
+      'displayName': 'Name',
+      'width': 35,
+      'sort': true,
+    },
+    {
+      'name': 'price',
+      'displayName': 'Price',
+      'width': 20,
+      'sort': true,
+    },
+    {
+      'name': 'edit',
+      'displayName': '',
+      'width': 10,
+    },
   ];
-
-  dataSource: MatTableDataSource<any>;
-
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  rows: any;
 
   constructor(
     private firebaseItemService: FirebaseItemService
   ) {
-    this.firebaseItemService.getItemList().subscribe(
-      (itemList) => {
-        this.dataSource = new MatTableDataSource(itemList);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      }
-    );
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.rows = firebaseItemService.getItemList();
   }
 }

@@ -1,53 +1,70 @@
 import { FirebaseShoppingCartService } from './../services/firebase-shopping-cart.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Item } from '../models/item';
 import { Observable } from 'rxjs/Observable';
+import { EnhancedTableColumn } from '../shared/enhanced-table/enhanced-table-column';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent implements OnInit {
-  displayedColumns = [
-    'image',
-    'name',
-    'price',
-    'quantity',
-    'total_price',
-    'clear',
+export class ShoppingCartComponent {
+  columns: EnhancedTableColumn[] = [
+    {
+      'name': 'image',
+      'displayName': '',
+      'width': 20,
+    },
+    {
+      'name': 'name',
+      'displayName': 'Name',
+      'width': 20,
+      'sort': true,
+    },
+    {
+      'name': 'price',
+      'displayName': 'Price',
+      'width': 20,
+      'sort': true,
+    },
+    {
+      'name': 'quantity',
+      'displayName': 'Quantity',
+      'width': 20,
+      'sort': true,
+      'editable': true
+    },
+    {
+      'name': 'total_price',
+      'displayName': 'Total Price',
+      'expression': {
+        'variables': ['price', 'quantity'],
+        'operation': '*'
+      },
+      'width': 10,
+    },
+    {
+      'name': 'delete',
+      'displayName': '',
+      'width': 10
+    },
   ];
+  rows: any;
 
-  dataSource: MatTableDataSource<any>;
   totalCost: Observable<any>;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private firebaseShoppingCartService: FirebaseShoppingCartService) {
-    this.firebaseShoppingCartService.getItems().subscribe(
-      (itemList) => {
-        this.dataSource = new MatTableDataSource(itemList);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      }
-    );
-
+    this.rows = this.firebaseShoppingCartService.getItems();
     this.totalCost = firebaseShoppingCartService.getTotalCost();
   }
 
-  ngOnInit() {
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
-  }
-
-  addItem(item: Item, quantity?: number) {
-    this.firebaseShoppingCartService.addItem(item, quantity);
+  addItem(item: Item) {
+    this.firebaseShoppingCartService.addItem(item, item.quantity);
   }
 
   removeItem(item: Item) {

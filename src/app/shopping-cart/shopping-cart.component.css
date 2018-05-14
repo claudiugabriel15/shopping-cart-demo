@@ -1,45 +1,5 @@
-.full-width-input {
-  width: 100%;
-}
-
-.filter-input {
-  margin-top: 10px;
-}
-
-.mat-row.even-row {
-  background-color: rgba(0,0,0,.04);
-}
-
-.item-image {
-  margin: 5px 0;
-  vertical-align: middle;
-  max-height: 100%;
-  max-width: 83%;
-  border: 2px solid lightgray;
-}
-
-.item-quantity {
-  font-weight: bold;
-}
-
 .cost-section {
   margin-top: 20px;
   font-size: 30px;
   font-weight: bold;
 }
-
-@media screen and (max-width: 600px) {
-  .mat-cell {
-    font-size: 10px;
-  }
-
-  .mat-header-cell {
-    font-size: 10px;
-  }
-
-  .cost-section {
-    font-size: 15px;
-  }
-}
-
-
