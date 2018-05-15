@@ -4,19 +4,20 @@
   fxFlex="row" fxLayoutAlign="space-between center">
 
   <div>
-    <a mat-button routerLink="" class="item-count">
+    <a mat-button routerLink="shopping-cart" class="item-count">
       <mat-icon>shopping_cart</mat-icon>
       <strong>
-        {{ itemQuantity | async }}
+        {{ itemQuantity$ | async }}
       </strong>
     </a>
 
-    <a mat-button routerLink="/shopping-cart">Shopping Cart</a>
+    <a mat-button routerLink=""><strong>Items</strong></a>
+
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item routerLink="/my/orders">My Orders</button>
-      <button mat-menu-item routerLink="/admin/orders" *ngIf="firebaseUserService.isAdmin$ | async">Manage Orders</button>
-      <button mat-menu-item routerLink="/admin/items" *ngIf="firebaseUserService.isAdmin$ | async">Manage Items</button>
-      <button mat-menu-item routerLink="/admin/types" *ngIf="firebaseUserService.isAdmin$ | async">Manage Types</button>
+      <button mat-menu-item routerLink="/admin/orders" *ngIf="isAdmin$ | async">Manage Orders</button>
+      <button mat-menu-item routerLink="/admin/items" *ngIf="isAdmin$ | async">Manage Items</button>
+      <button mat-menu-item routerLink="/admin/types" *ngIf="isAdmin$ | async">Manage Types</button>
       <button mat-menu-item (click)="logout()">Log Out</button>
     </mat-menu>
   </div>

@@ -1,4 +1,4 @@
-import { isDevMode } from '@angular/core';
+import { isDevMode, APP_INITIALIZER } from '@angular/core';
 import { AlertService } from './services/alert.service';
 import { FirebaseUserService } from './services/firebase-user.service';
 import { FirebaseShoppingCartService } from './services/firebase-shopping-cart.service';
@@ -8,6 +8,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, CanActivate } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 // Angular Material modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTooltipModule } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -55,7 +58,6 @@ import { FirebaseItemService } from './services/firebase-item.service';
 
 // tslint:disable-next-line:max-line-length
 import { AdminItemsDeleteConfirmationComponent } from './admin/admin-items-edit/admin-items-delete-confirmation/admin-items-delete-confirmation.component';
-import { MatTooltipModule } from '@angular/material';
 import { AdminTypesComponent } from './admin/admin-types/admin-types.component';
 import { FirebaseTypeService } from './services/firebase-type.service';
 // tslint:disable-next-line:max-line-length
@@ -67,6 +69,7 @@ import { EnhancedTableComponent } from './shared/enhanced-table/enhanced-table.c
 
 // Environment
 import { environment } from '../environments/environment';
+import { Config } from '../config/config';
 
 const APP_ROUTES = [
   {
@@ -97,8 +100,6 @@ const APP_ROUTES = [
     component: SuccessComponent,
     canActivate: [ AuthGuardService ]
   },
-
-
   {
     path: 'admin/items',
     component: AdminItemsComponent,
@@ -131,6 +132,10 @@ const APP_ROUTES = [
   },
 ];
 
+function initConfig(config: Config) {
+  return () => config.load();
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -161,6 +166,8 @@ const APP_ROUTES = [
       APP_ROUTES
     ),
     FormsModule,
+    HttpClientModule,
+    HttpModule,
 
     // Angular Material
     MatToolbarModule,
@@ -191,6 +198,13 @@ const APP_ROUTES = [
     AdminItemTypesDeleteConfirmationComponent,
   ],
   providers: [
+    Config,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initConfig,
+      deps: [Config, HttpModule],
+      multi: true,
+    },
     AngularFireAuth,
     LoginService,
     AlertService,

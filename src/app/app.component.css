@@ -1,4 +1,11 @@
 .container {
   padding-top: 40px;
 }
+.container {
+  padding-top: 40px;
+}
+
+.mat-form-field {
+  margin-bottom: 10px;
+}
 

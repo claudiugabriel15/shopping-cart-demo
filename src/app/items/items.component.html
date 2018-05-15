@@ -12,7 +12,7 @@
           <mat-list-option value="All" [selected]="isTypeSelected('All')">
             All
           </mat-list-option>
-          <mat-list-option *ngFor="let type of types | async" [value]="type.name" [selected]="isTypeSelected(type.name)">
+          <mat-list-option *ngFor="let type of types | async" [value]="type.id" [selected]="isTypeSelected(type.id)">
             {{ type.name }}
           </mat-list-option>
         </mat-selection-list>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <mat-grid-list #gridList [cols]="columnNo" rowHeight="450px" fxFlex="100" gutterSize="20px">
+  <mat-grid-list #gridList [cols]="columnNo || 1" rowHeight="450px" fxFlex="100" gutterSize="10px">
     <mat-grid-tile *ngFor="let item of items">
       <app-item-card [data]="item" quantity="true" (add)="addToCart(item)" (remove)="removeFromCart(item)"></app-item-card>
     </mat-grid-tile>

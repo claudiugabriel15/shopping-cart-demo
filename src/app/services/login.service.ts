@@ -1,3 +1,4 @@
+import { AlertService } from './alert.service';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseUserService } from './firebase-user.service';
 import { Injectable } from '@angular/core';
@@ -16,7 +17,9 @@ export class LoginService {
     private angularFireAuth: AngularFireAuth,
     private router: Router,
     private db: AngularFireDatabase,
-    private firebaseUserService: FirebaseUserService) {
+    private firebaseUserService: FirebaseUserService,
+    private alertService: AlertService,
+  ) {
       this.hasLoggedIn$ = new BehaviorSubject(false);
   }
 
@@ -34,6 +37,7 @@ export class LoginService {
       },
       (result) => {
         this.router.navigateByUrl('login');
+        this.alertService.errorAlert(result.message);
       }
     );
   }

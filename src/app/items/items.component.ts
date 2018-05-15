@@ -24,7 +24,7 @@ export class ItemsComponent {
   selectedTypes: string[];
   itemCount = 0;
   screenWidth: number;
-  isHidden = false;
+  isHidden = true;
   isSideHidden = false;
   columnNo = 1;
 

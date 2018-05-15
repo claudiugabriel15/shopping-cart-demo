@@ -5,4 +5,5 @@ export interface EnhancedTableColumn {
   sort?: boolean;
   editable?: boolean;
   expression?: {};
+  currency?: string;
 }

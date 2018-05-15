@@ -57,7 +57,7 @@ export class FirebaseItemService {
     );
   }
 
-  removetItem(id: string) {
+  removeItem(id: string) {
     return this.db.object('/items/' + id).remove();
   }
 }

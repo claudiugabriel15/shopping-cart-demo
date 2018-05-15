@@ -1,0 +1,17 @@
+.login-card {
+    margin-top: 40px;
+}
+
+.mat-card-title {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mat-card-actions, .mat-card-content, .mat-card-subtitle, .mat-card-title {
+    margin-bottom: 30px;
+}
+
+.mat-icon {
+  padding-right: 15px;
+}

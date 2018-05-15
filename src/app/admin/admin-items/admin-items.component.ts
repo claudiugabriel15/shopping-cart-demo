@@ -1,6 +1,7 @@
 import { FirebaseItemService } from './../../services/firebase-item.service';
 import { Component, ViewChild } from '@angular/core';
 import { EnhancedTableColumn } from '../../shared/enhanced-table/enhanced-table-column';
+import { Config } from '../../../config/config';
 
 @Component({
   selector: 'app-admin-items',
@@ -8,23 +9,39 @@ import { EnhancedTableColumn } from '../../shared/enhanced-table/enhanced-table-
   styleUrls: ['./admin-items.component.css']
 })
 export class AdminItemsComponent {
-  columns: EnhancedTableColumn[] = [
+  columns: EnhancedTableColumn[] = [];
+  rows: any;
+
+  constructor(
+    private firebaseItemService: FirebaseItemService,
+    private config: Config,
+  ) {
+    this.rows = firebaseItemService.getItemList();
+
+    this.columns = [
     {
       'name': 'id',
       'displayName': 'Id',
-      'width': 35,
+      'width': 30,
       'sort': true,
     },
     {
       'name': 'name',
       'displayName': 'Name',
-      'width': 35,
+      'width': 30,
       'sort': true,
     },
     {
       'name': 'price',
       'displayName': 'Price',
-      'width': 20,
+      'width': 15,
+      'sort': true,
+      'currency': this.config.get('currency')
+    },
+    {
+      'name': 'quantity',
+      'displayName': 'Quantity',
+      'width': 15,
       'sort': true,
     },
     {
@@ -33,11 +50,5 @@ export class AdminItemsComponent {
       'width': 10,
     },
   ];
-  rows: any;
-
-  constructor(
-    private firebaseItemService: FirebaseItemService
-  ) {
-    this.rows = firebaseItemService.getItemList();
   }
 }

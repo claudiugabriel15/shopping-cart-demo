@@ -3,7 +3,7 @@
 }
 
 form {
-  height: 100%;
+  height: auto;
 }
 
 .mat-raised-button.mat-primary {

@@ -2,24 +2,23 @@
   <mat-card-header>
     <mat-card-title>{{ data.name }}</mat-card-title>
     <mat-card-subtitle>
-      <span matPrefix>$</span>
-      {{ data.price }}
+      {{ data.price | currency: config.get('currency'): true}}
     </mat-card-subtitle>
   </mat-card-header>
-  <img *ngIf="data.imageURL !== ''" mat-card-image src="{{ data.imageURL }}">
+  <img mat-card-image src="{{ data.imageURL || 'assets/images/No_image_available.png' }}" [class.out-of-stock]="data.quantity <= 0 && quantity">
   <mat-card-content>
     <p>
       {{ data.description }}
     </p>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-    <div *ngIf="quantity != undefined" fxFlex fxLayout="row" [ngStyle]="{'place-content': (itemQuantity | async) > 0 ? 'center space-between' : 'center center'}">
-      <button *ngIf="hasRemoveFunctionality && (itemQuantity | async)" mat-raised-button color="warn" (click)="removeItem()">Remove</button>
-      <div [hidden]="!((itemQuantity | async) > 0)" class="item-count">
+    <div *ngIf="quantity != undefined" fxFlex fxLayout="row" [ngStyle]="{'place-content': (cartItemQuantity | async) > 0 ? 'center space-between' : 'center center'}">
+      <button *ngIf="hasRemoveFunctionality && (cartItemQuantity | async)" mat-raised-button color="warn" (click)="removeItem()">Remove</button>
+      <div [hidden]="!((cartItemQuantity | async) > 0)" class="item-count">
         <mat-icon>shopping_cart</mat-icon>
-        <strong>{{ itemQuantity | async }}</strong>
+        <strong>{{ cartItemQuantity | async }}</strong>
       </div>
-      <button *ngIf="hasAddFunctionality" mat-raised-button color="primary" (click)="addItem()">Add</button>
+      <button [disabled]="data.quantity <=  0" *ngIf="hasAddFunctionality" mat-raised-button color="primary" (click)="addItem()">Add</button>
     </div>
     <div *ngIf="quantity === undefined">
       <button *ngIf="hasRemoveFunctionality" mat-raised-button color="warn" (click)="removeItem()">Remove</button>

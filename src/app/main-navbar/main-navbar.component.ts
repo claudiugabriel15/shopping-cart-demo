@@ -12,16 +12,16 @@ import { Component } from '@angular/core';
 export class MainNavbarComponent {
   authState: any;
   loggedUser$: Observable<any>;
-  isAdmin: any;
-  itemQuantity: Observable<number>;
+  isAdmin$: Observable<boolean>;
+  itemQuantity$: Observable<number>;
 
   constructor(
     public loginService: LoginService,
     public firebaseUserService: FirebaseUserService,
     public firebaseShoppingCartService: FirebaseShoppingCartService) {
       this.loggedUser$ = loginService.userData$;
-      // this.isAdmin = this.firebaseUserService.isAdmin$;
-      this.itemQuantity = firebaseShoppingCartService.getAllItemQuantity();
+      this.isAdmin$ = this.firebaseUserService.isAdmin$;
+      this.itemQuantity$ = firebaseShoppingCartService.getAllItemQuantity();
     }
 
   logout() {

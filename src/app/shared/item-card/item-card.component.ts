@@ -1,6 +1,7 @@
 import { FirebaseShoppingCartService } from './../../services/firebase-shopping-cart.service';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, SimpleChange } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Config } from '../../../config/config';
 
 @Component({
   selector: 'app-item-card',
@@ -16,17 +17,19 @@ export class ItemCardComponent implements OnInit {
 
   hasRemoveFunctionality: boolean;
   hasAddFunctionality: boolean;
-  itemQuantity: Observable<any>;
+  cartItemQuantity: Observable<any>;
 
-  constructor(private shoppingCartService: FirebaseShoppingCartService) {
-  }
+  constructor(
+    private shoppingCartService: FirebaseShoppingCartService,
+    public config: Config,
+  ) {}
 
   ngOnInit() {
     this.hasAddFunctionality = this.add.observers.length > 0 ? true : false;
     this.hasRemoveFunctionality = this.remove.observers.length > 0 ? true : false;
 
     if (this.quantity) {
-      this.itemQuantity = this.shoppingCartService.getItemQuantity(this.data);
+      this.cartItemQuantity = this.shoppingCartService.getItemQuantity(this.data);
     }
   }
 

@@ -11,8 +11,9 @@
   background-color: rgba(0,0,0,.04);
 }
 
-.edit-button-mobile {
+.table-edit-button {
   text-align: left;
+  display: flex;
 }
 
 .item-image {
@@ -23,13 +24,12 @@
   border: 2px solid lightgray;
 }
 
+.mat-cell, .mat-header-cell {
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
-  .mat-cell {
+  .mat-cell, .mat-header-cell {
     font-size: 10px;
   }
-
-  .mat-header-cell {
-    font-size: 10px;
-  }
-
 }

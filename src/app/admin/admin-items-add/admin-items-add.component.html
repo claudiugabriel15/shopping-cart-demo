@@ -17,7 +17,6 @@
           </mat-form-field>
 
           <mat-form-field>
-            <span matPrefix>$ &nbsp;</span>
             <input matInput type="number" placeholder="Price" [(ngModel)]="newItem.price" name="price" step="0.01" #price="ngModel"
             pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" required>
             <mat-hint *ngIf="price.touched && price.invalid" align="start">
@@ -36,6 +35,15 @@
           <mat-form-field>
             <textarea  matInput type="url" placeholder="Description" [(ngModel)]="newItem.description" name="description"></textarea>
           </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="number" placeholder="Quantity" [(ngModel)]="newItem.quantity" name="quantity" step="1" #quantity="ngModel"
+            pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$">
+            <mat-hint *ngIf="quantity?.touched && quantity.invalid" align="start">
+              <strong *ngIf="quantity?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
+            </mat-hint>
+          </mat-form-field>
+
         </div>
         <div>
           <button mat-raised-button color="primary" [disabled]="!f.dirty || !f.valid" (click)="submit(f)">Add</button>

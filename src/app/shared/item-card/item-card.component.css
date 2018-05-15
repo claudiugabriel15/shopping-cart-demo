@@ -1,8 +1,12 @@
 .mat-card {
-  width: 300px;
+  width: 260px;
 }
 
 .item-count>.mat-icon {
   margin-top: 7px;
   vertical-align: bottom;
+}
+
+.out-of-stock {
+  opacity: 0.5;
 }

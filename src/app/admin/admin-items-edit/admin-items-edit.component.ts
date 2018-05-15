@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/take';
 import { AdminItemsDeleteConfirmationComponent } from './admin-items-delete-confirmation/admin-items-delete-confirmation.component';
 import { FirebaseTypeService } from '../../services/firebase-type.service';
+import { Config } from '../../../config/config';
 
 @Component({
   selector: 'app-admin-items-edit',
@@ -26,7 +27,9 @@ export class AdminItemsEditComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private alertService: AlertService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public config: Config,
+    ) {
 
     const id = this.activatedRoute.snapshot.params.id || null;
 
@@ -65,7 +68,7 @@ export class AdminItemsEditComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.firebaseItemService.removetItem(this.data.id).then(
+        this.firebaseItemService.removeItem(this.data.id).then(
           () => {
             this.alertService.successAlert('Item ' + this.data.name + ' deleted');
             this.router.navigateByUrl('admin/items');
