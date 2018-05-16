@@ -2,27 +2,35 @@ import { FirebaseShoppingCartService } from './../services/firebase-shopping-car
 import { FirebaseUserService } from './../services/firebase-user.service';
 import { LoginService } from './../services/login.service';
 import { Observable } from 'rxjs/Observable';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-main-navbar',
   templateUrl: './main-navbar.component.html',
   styleUrls: ['./main-navbar.component.css']
 })
-export class MainNavbarComponent {
+export class MainNavbarComponent implements OnInit {
   authState: any;
   loggedUser$: Observable<any>;
-  isAdmin$: Observable<boolean>;
+  isAdmin: any;
   itemQuantity$: Observable<number>;
 
   constructor(
     public loginService: LoginService,
     public firebaseUserService: FirebaseUserService,
     public firebaseShoppingCartService: FirebaseShoppingCartService) {
-      this.loggedUser$ = loginService.userData$;
-      this.isAdmin$ = this.firebaseUserService.isAdmin$;
-      this.itemQuantity$ = firebaseShoppingCartService.getAllItemQuantity();
+      this.firebaseUserService.isAdmin$.subscribe((value) => {
+        console.log(value);
+        this.isAdmin = value;
+        return value;
+      });
+      this.loggedUser$ = this.loginService.userData$;
+      this.itemQuantity$ = this.firebaseShoppingCartService.getAllItemQuantity();
     }
+
+  ngOnInit() {
+
+  }
 
   logout() {
     this.loginService.signOut();

@@ -15,9 +15,9 @@
 
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item routerLink="/my/orders">My Orders</button>
-      <button mat-menu-item routerLink="/admin/orders" *ngIf="isAdmin$ | async">Manage Orders</button>
-      <button mat-menu-item routerLink="/admin/items" *ngIf="isAdmin$ | async">Manage Items</button>
-      <button mat-menu-item routerLink="/admin/types" *ngIf="isAdmin$ | async">Manage Types</button>
+      <button mat-menu-item routerLink="/admin/orders" *ngIf="isAdmin">Manage Orders</button>
+      <button mat-menu-item routerLink="/admin/items" *ngIf="isAdmin">Manage Items</button>
+      <button mat-menu-item routerLink="/admin/types" *ngIf="isAdmin">Manage Types</button>
       <button mat-menu-item (click)="logout()">Log Out</button>
     </mat-menu>
   </div>

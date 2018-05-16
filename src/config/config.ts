@@ -11,18 +11,21 @@ import * as _ from 'lodash';
     constructor(private http: Http) {
     }
 
-    load() {
+    load(): Promise<boolean> {
       return this.http.get('assets/locale.json')
         .map(res => res.json())
+        .toPromise()
         .catch((error: any) => {
           this.setDefaultValues();
-          return error;
+          return false;
         })
-        .subscribe((config) => {
+        .then((config) => {
           _.set(this, '_config.currency', config.currency);
           _.set(this, '_config.language', config.language);
           _.set(this, '_config.dateFormat', config.dateFormat);
           _.set(this, '_config.dictionary', config.dictionary);
+
+          return true;
         });
     }
 

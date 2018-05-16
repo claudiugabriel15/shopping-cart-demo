@@ -132,7 +132,7 @@ const APP_ROUTES = [
   },
 ];
 
-function initConfig(config: Config) {
+export function initConfig(config: Config) {
   return () => config.load();
 }
 
@@ -202,7 +202,7 @@ function initConfig(config: Config) {
     {
       provide: APP_INITIALIZER,
       useFactory: initConfig,
-      deps: [Config, HttpModule],
+      deps: [Config],
       multi: true,
     },
     AngularFireAuth,
