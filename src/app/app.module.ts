@@ -27,6 +27,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -43,7 +47,6 @@ import { HomeComponent } from './home/home.component';
 import { ItemsComponent } from './items/items.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './success/success.component';
-import { OrderHistoryComponent } from './order-history/order-history.component';
 import { AdminItemsComponent } from './admin/admin-items/admin-items.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
@@ -70,6 +73,10 @@ import { EnhancedTableComponent } from './shared/enhanced-table/enhanced-table.c
 // Environment
 import { environment } from '../environments/environment';
 import { Config } from '../config/config';
+import { AccountComponent } from './my/account/account/account.component';
+import { AddressFormComponent } from './shared/address-form/address-form.component';
+import { FirebaseOrdersService } from './services/firebase-orders.service';
+import { LocationService } from './services/location.service';
 
 const APP_ROUTES = [
   {
@@ -84,7 +91,11 @@ const APP_ROUTES = [
     path: 'shopping-cart',
     component: ShoppingCartComponent
   },
-
+  {
+    path: 'my/account',
+    component: AccountComponent,
+    canActivate: [ AuthGuardService ]
+  },
   {
     path: 'my/orders',
     component: OrdersComponent,
@@ -146,7 +157,6 @@ export function initConfig(config: Config) {
     ItemsComponent,
     CheckoutComponent,
     SuccessComponent,
-    OrderHistoryComponent,
     AdminItemsComponent,
     AdminOrdersComponent,
     LoginComponent,
@@ -158,6 +168,8 @@ export function initConfig(config: Config) {
     AdminTypesComponent,
     AdminItemTypesDeleteConfirmationComponent,
     EnhancedTableComponent,
+    AccountComponent,
+    AddressFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -185,6 +197,10 @@ export function initConfig(config: Config) {
     MatListModule,
     MatGridListModule,
     MatTooltipModule,
+    MatDividerModule,
+    MatRadioModule,
+    MatAutocompleteModule,
+    MatTabsModule,
 
     // Flex Modules
     FlexLayoutModule,
@@ -210,10 +226,12 @@ export function initConfig(config: Config) {
     AlertService,
     AdminGuardService,
     AuthGuardService,
+    LocationService,
     FirebaseUserService,
     FirebaseItemService,
     FirebaseTypeService,
     FirebaseShoppingCartService,
+    FirebaseOrdersService,
   ],
   bootstrap: [AppComponent]
 })

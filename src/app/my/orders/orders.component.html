@@ -1,3 +1,6 @@
-<p>
-  orders works!
-</p>
+<div fxFlex="100" fxLayoutAlign="center center">
+  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <app-enhanced-table [columns]="columns" [rows]="rows | async"></app-enhanced-table>
+  </div>
+</div>
+

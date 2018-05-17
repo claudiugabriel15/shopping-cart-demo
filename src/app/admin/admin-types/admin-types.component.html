@@ -1,18 +1,22 @@
-<app-enhanced-table [columns]="columns" [rows]="rows | async" (remove)="removeType($event)">
-  <form #f="ngForm" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign.gt-md="space-between center">
-    <mat-form-field class="full-width-input" fxFlex="100" fxFlex.gt-sm="40">
-      <input matInput placeholder="Id" #id="ngModel" required [(ngModel)]="newType.id" name="id">
-      <mat-hint *ngIf="id.touched && id.invalid" align="start">
-        <strong *ngIf="id?.errors.required"  class="validation-error">Field is required.</strong>
-      </mat-hint>
-    </mat-form-field>
-    <mat-form-field class="full-width-input" fxFlex="100" fxFlex.gt-sm="40">
-      <input matInput placeholder="Name" #name="ngModel" required [(ngModel)]="newType.name" name="name">
-      <mat-hint *ngIf="name.touched && name.invalid" align="start">
-        <strong *ngIf="name?.errors.required"  class="validation-error">Field is required.</strong>
-      </mat-hint>
-    </mat-form-field>
-    <button mat-button mat-raised-button aria-label="Add Type" color="primary" fxFlex="100" fxFlex.gt-sm="10"
-    (click)="addType(f.value)" type="submit">Add Type</button>
-  </form>
-</app-enhanced-table>
+<div fxFlex="100" fxLayoutAlign="center center">
+  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <app-enhanced-table [columns]="columns" [rows]="rows | async" (remove)="removeType($event)">
+    <form #f="ngForm" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign.gt-md="space-between center">
+      <mat-form-field class="full-width-input" fxFlex="100" fxFlex.gt-sm="40">
+        <input matInput placeholder="Id" #id="ngModel" required [(ngModel)]="newType.id" name="id">
+        <mat-hint *ngIf="id.touched && id.invalid" align="start">
+          <strong *ngIf="id?.errors.required"  class="validation-error">Field is required.</strong>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field class="full-width-input" fxFlex="100" fxFlex.gt-sm="40">
+        <input matInput placeholder="Name" #name="ngModel" required [(ngModel)]="newType.name" name="name">
+        <mat-hint *ngIf="name.touched && name.invalid" align="start">
+          <strong *ngIf="name?.errors.required"  class="validation-error">Field is required.</strong>
+        </mat-hint>
+      </mat-form-field>
+      <button mat-button mat-raised-button aria-label="Add Type" color="primary" fxFlex="100" fxFlex.gt-sm="10"
+      (click)="addType(f.value)" type="submit">Add Type</button>
+    </form>
+    </app-enhanced-table>
+  </div>
+</div>

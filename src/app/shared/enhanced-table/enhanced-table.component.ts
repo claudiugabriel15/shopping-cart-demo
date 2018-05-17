@@ -15,6 +15,7 @@ export class EnhancedTableComponent implements OnChanges {
 
   @Input() columns: EnhancedTableColumn[];
   @Input() rows: any[];
+  @Input() displayOnly: boolean;
 
   @Output('remove') remove = new EventEmitter<any>();
   @Output('edit') edit = new EventEmitter<any>();

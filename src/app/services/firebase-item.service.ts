@@ -22,8 +22,7 @@ export class FirebaseItemService {
       (items) => {
         const alteredItemArray: Item[] = [];
         _.each(items, (value, key) => {
-          const item = new Item(value);
-          item.id = key;
+          const item = new Item({...value, id: key});
           alteredItemArray.push(item);
         });
 
@@ -35,7 +34,7 @@ export class FirebaseItemService {
           });
         }
 
-        if (search) {
+        if (search && search.trim()) {
           _.remove(alteredItemArray, (item) => {
             return item.name.toLowerCase().search(search.toLowerCase());
           });
@@ -49,9 +48,7 @@ export class FirebaseItemService {
   getItem(id: string) {
     return this.db.object('/items/' + id).valueChanges().map(
       (item) => {
-        const newItem = new Item(item);
-        newItem.id = id;
-
+        const newItem = new Item({...item, id: id});
         return newItem;
       }
     );

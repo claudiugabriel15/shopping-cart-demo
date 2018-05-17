@@ -1,7 +1,11 @@
-<app-enhanced-table [columns]="columns" [rows]="rows$ | async" (remove)="clearAll($event)" (edit)="addItem($event)">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="cost-section">{{ (itemQuantity$ | async) || 0 }} Items</div>
-    <div class="cost-section">Total cost: {{ (totalCost$ | async) || 0 | currency: config.get('currency'): 'symbol' }}</div>
-    <button mat-raised-button color="primary" (click)="placeOrder()" [disabled]="(totalCost$ | async) === 0">Order</button>
+<div fxFlex="100" fxLayoutAlign="center center">
+  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <app-enhanced-table [columns]="columns" [rows]="rows$ | async" (remove)="clearAll($event)" (edit)="addItem($event)">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h3 class="cost-section">{{ ((itemQuantity$ | async) || 0) + ((itemQuantity$ | async) === 1 ? ' Item' : ' Items')  }}</h3>
+        <h3 class="cost-section">Total cost: {{ (totalCost$ | async) || 0 | currency: config.get('currency'): 'symbol' }}</h3>
+        <button mat-raised-button color="primary" [disabled]="(totalCost$ | async) === 0" routerLink="/checkout">Check Out</button>
+      </div>
+    </app-enhanced-table>
   </div>
-</app-enhanced-table>
+</div>

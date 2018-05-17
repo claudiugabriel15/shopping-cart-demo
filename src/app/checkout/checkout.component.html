@@ -1,3 +1,27 @@
-<p>
-  checkout works!
-</p>
+<div fxFlex="100" fxLayoutAlign="center center">
+  <mat-tab-group fxFlex="90" fxFlex.gt-sm="70" fxLayout="column">
+    <mat-tab label="Shipping Address">
+      <app-address-form class="address-form" [model]="checkout.shipping" [required]="true" (submitAction)="placeOrder()">
+        <mat-label>Autofill location detail option: </mat-label>
+        <mat-radio-group fxLayout="column">
+          <mat-radio-button
+          *ngFor="let option of locationOptions"
+          [value]="option.value"
+          [disabled]="option.disabled"
+          [checked]="option.default"
+          (change)="$event.source.checked === true && option.action ? option.action(this) : false">
+            {{ option.value }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </app-address-form>
+    </mat-tab>
+
+    <mat-tab label="Order Overview">
+      <app-enhanced-table class="order-items-table" [columns]="columns" [rows]="rows" [displayOnly]="true"></app-enhanced-table>
+      <div fxFlex fxLayout="row" fxLayoutAlign="end">
+        <h3 class="cost-section">Cost: {{ totalCost }}</h3>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+

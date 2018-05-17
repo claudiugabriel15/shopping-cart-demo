@@ -29,6 +29,17 @@ export class FirebaseShoppingCartService {
     }
   }
 
+  public removeShoppingCart() {
+    const shoppingCartId = localStorage.getItem('shoppingCartId');
+    if (!_.isEmpty(shoppingCartId)) {
+      this.db.object('/shopping-carts/' + shoppingCartId).remove()
+      .then(
+        () => localStorage.removeItem('shoppingCartId'),
+        (error: Error) => console.log('firebase: Can\'t remove shopping cart ', error.message)
+      );
+    }
+  }
+
   private getItem(shoppingCartId: string, itemId: string) {
     return this.db.object('/shopping-carts/' + shoppingCartId + '/items/' + itemId);
   }
@@ -43,11 +54,9 @@ export class FirebaseShoppingCartService {
     this.getItem(shoppingCartId, item.id).valueChanges().take(1).subscribe(
       addedItem => {
         if (!addedItem) {
+          item.quantity = 1;
           this.getItem(shoppingCartId, item.id).set(
-            {
-              item: item,
-              quantity: 1
-            }
+            item
           );
         } else if (quantity) {
           this.getItem(shoppingCartId, item.id).update({
@@ -92,9 +101,7 @@ export class FirebaseShoppingCartService {
       (items) => {
         const alteredItemArray: Item[] = [];
         _.each(items, (value, key) => {
-          const item = new Item(value.item);
-          item.id = key;
-          item.quantity = value.quantity;
+          const item = new Item(value);
           alteredItemArray.push(item);
         });
 
@@ -143,7 +150,7 @@ export class FirebaseShoppingCartService {
       items => {
         let cost = 0;
         _.each(items,
-          (item) => cost = cost + _.get(item, 'quantity', 0) * item.item.price
+          (item) => cost = cost + _.get(item, 'quantity', 0) * item.price
         );
         return cost;
       }

@@ -1,25 +1,17 @@
 <mat-toolbar color="primary"
-  class="main-navbar mat-typography"
+  class="main-navbar"
   [class.mat-elevation-z4]="true"
   fxFlex="row" fxLayoutAlign="space-between center">
 
   <div>
-    <a mat-button routerLink="shopping-cart" class="item-count">
+    <a mat-button routerLink="shopping-cart" routerLinkActive="active-link" class="item-count">
       <mat-icon>shopping_cart</mat-icon>
       <strong>
         {{ itemQuantity$ | async }}
       </strong>
     </a>
 
-    <a mat-button routerLink=""><strong>Items</strong></a>
-
-    <mat-menu #appMenu="matMenu">
-      <button mat-menu-item routerLink="/my/orders">My Orders</button>
-      <button mat-menu-item routerLink="/admin/orders" *ngIf="isAdmin">Manage Orders</button>
-      <button mat-menu-item routerLink="/admin/items" *ngIf="isAdmin">Manage Items</button>
-      <button mat-menu-item routerLink="/admin/types" *ngIf="isAdmin">Manage Types</button>
-      <button mat-menu-item (click)="logout()">Log Out</button>
-    </mat-menu>
+    <a mat-button routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Items</a>
   </div>
 
   <div>
@@ -34,6 +26,23 @@
       <span class="user-name" fxHide fxShow.gt-xs>{{ (loggedUser$ | async)?.displayName }} </span>
       <i class="material-icons">keyboard_arrow_down</i>
     </button>
+
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="user">User pages</button>
+      <button mat-menu-item [matMenuTriggerFor]="admin">Admin pages</button>
+      <button mat-menu-item (click)="logout()">Log Out</button>
+    </mat-menu>
+
+    <mat-menu #user="matMenu">
+      <button mat-menu-item routerLink="/my/account" routerLinkActive="active-link" [disabled]="true">Account Settings</button>
+      <button mat-menu-item routerLink="/my/orders" routerLinkActive="active-link">Orders</button>
+    </mat-menu>
+
+    <mat-menu #admin="matMenu">
+      <button mat-menu-item routerLink="/admin/orders" *ngIf="isAdmin" routerLinkActive="active-link">Manage Orders</button>
+      <button mat-menu-item routerLink="/admin/items" *ngIf="isAdmin" routerLinkActive="active-link">Manage Items</button>
+      <button mat-menu-item routerLink="/admin/types" *ngIf="isAdmin"routerLinkActive="active-link">Manage Types</button>
+    </mat-menu>
   </div>
 
 </mat-toolbar>

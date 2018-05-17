@@ -1,6 +1,4 @@
 {
   "currency": "USD",
-  "language": "en-us",
-  "dateFormat": "en-us",
-  "dictionary": {}
+  "dateFormat": "en-US"
 }

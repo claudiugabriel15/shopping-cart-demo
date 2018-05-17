@@ -19,13 +19,23 @@
 .item-image {
   margin: 5px 0;
   vertical-align: middle;
-  max-height: 100%;
-  max-width: 83%;
+  max-height: 139px;
+  max-width: 187px;
+  width: 90%;
   border: 2px solid lightgray;
 }
 
 .mat-cell, .mat-header-cell {
   text-align: center;
+}
+
+.item-quantity {
+  width: 60%;
+}
+
+.warn {
+  color: red;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {

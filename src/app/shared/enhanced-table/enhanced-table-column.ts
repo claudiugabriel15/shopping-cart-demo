@@ -1,9 +1,10 @@
 export interface EnhancedTableColumn {
   name: string;
   displayName: string;
-  width: number;
+  width?: number;
   sort?: boolean;
   editable?: boolean;
   expression?: {};
   currency?: string;
+  date?: any;
 }

@@ -21,9 +21,7 @@ import * as _ from 'lodash';
         })
         .then((config) => {
           _.set(this, '_config.currency', config.currency);
-          _.set(this, '_config.language', config.language);
           _.set(this, '_config.dateFormat', config.dateFormat);
-          _.set(this, '_config.dictionary', config.dictionary);
 
           return true;
         });
@@ -35,8 +33,6 @@ import * as _ from 'lodash';
 
     setDefaultValues() {
       _.set(this, '_config.currency', 'USD');
-      _.set(this, '_config.language', 'en-us');
       _.set(this, '_config.dateFormat', 'en-us');
-      _.set(this, '_config.dictionary', {});
     }
 }

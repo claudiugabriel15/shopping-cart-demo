@@ -1,6 +1,6 @@
 import { FirebaseShoppingCartService } from './../services/firebase-shopping-cart.service';
 import { FirebaseItemService } from './../services/firebase-item.service';
-import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { MatSelectionListChange } from '@angular/material/list';
@@ -17,12 +17,11 @@ import { FirebaseTypeService } from '../services/firebase-type.service';
   styleUrls: ['./items.component.css'],
 })
 
-export class ItemsComponent {
+export class ItemsComponent implements OnInit {
   items: any;
   types: Observable<any[]>;
   searchInput: string;
   selectedTypes: string[];
-  itemCount = 0;
   screenWidth: number;
   isHidden = true;
   isSideHidden = false;
@@ -42,36 +41,43 @@ export class ItemsComponent {
     private firebaseItemService: FirebaseItemService,
     private firebaseTypeService: FirebaseTypeService,
     private shoppingCartService: FirebaseShoppingCartService) {
-      this.types = this.firebaseTypeService.getTypes();
-
-      // get params in order to update UI
-      this.searchInput = this.route.snapshot.queryParams.search || '';
-      this.selectedTypes = this.route.snapshot.queryParams.type || ['All'];
-
-      // update data according to param change
-      this.route.queryParams.subscribe((params) => {
-        if (!params) {
-          this.firebaseItemService.getItemList().take(1).subscribe(
-            (items) => this.items = items
-          );
-          return;
-        }
-        this.firebaseItemService.getItemList(params.type, params.search).subscribe(
-          (items) => this.items = items
-        );
-      });
-
-      this.screenWidth = window.innerWidth;
-      this.setColumnNo();
   }
 
-  navigateByType(selectedOptions: any, currentlySelected: MatSelectionListChange) {
+  ngOnInit() {
+    this.types = this.firebaseTypeService.getTypes();
+
+    // get params in order to update UI
+    const queryParams = this.route.snapshot.queryParams;
+    this.searchInput = queryParams.search || '';
+    this.selectedTypes = queryParams.type || ['All'];
+
+    // update data according to param change
+    this.subscribeToParamChanges();
+
+    this.screenWidth = window.innerWidth;
+    this.setColumnNo();
+  }
+
+  private subscribeToParamChanges() {
+    this.route.queryParams.subscribe((params) => {
+      if (!params) {
+        this.firebaseItemService.getItemList().take(1).subscribe(
+          (items) => this.items = items
+        );
+        return;
+      }
+      this.firebaseItemService.getItemList(params.type, params.search).take(1).subscribe(
+        (items) => this.items = items
+      );
+    });
+  }
+
+  private navigateByType(selectedOptions: any, currentlySelected: MatSelectionListChange) {
     if (currentlySelected.option.value === 'All') {
-      _.forEach(selectedOptions, (selectedOption) => {
-        if (selectedOption.value !== 'All') {
-          selectedOption.selected = false;
-        }
-      });
+
+      selectedOptions.map(
+        (selectedOption) => selectedOption.value !== 'All' ? selectedOption.selected = false : selectedOption.selected = true
+      );
 
       this.router.navigate(['/'], { queryParams: { search: this.searchInput }});
 
@@ -88,26 +94,26 @@ export class ItemsComponent {
     this.router.navigate(['/'], { queryParams: { type: this.selectedTypes,  search: this.searchInput }});
   }
 
-  isTypeSelected(type: string) {
+  private isTypeSelected(type: string) {
     return this.selectedTypes.indexOf(type) !== -1;
   }
 
-  addSearchParam() {
+  private addSearchParam() {
     const currentQueryParams = this.route.snapshot.queryParams;
     const newQueryParams = _.clone(currentQueryParams);
     newQueryParams['search'] = this.searchInput;
     this.router.navigate(['/'], { queryParams: newQueryParams });
   }
 
-  addToCart(item: Item) {
+  private addToCart(item: Item) {
     this.shoppingCartService.addItem(item);
   }
 
-  removeFromCart(item: Item) {
+  private removeFromCart(item: Item) {
     this.shoppingCartService.removeItem(item);
   }
 
-  setColumnNo() {
+  private setColumnNo() {
     setTimeout(() => {
       const elementWidth = _.get(this, 'gridListElem._element.nativeElement.offsetWidth', null);
       if (elementWidth) {

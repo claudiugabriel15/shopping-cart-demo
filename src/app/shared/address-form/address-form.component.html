@@ -1,0 +1,26 @@
+<form #f="ngForm" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between start">
+  <mat-form-field fxFlex="100">
+    <textarea matInput type="text" placeholder="Address" [(ngModel)]="model.address" name="Address" [required]="required"></textarea>
+  </mat-form-field>
+  <ng-content></ng-content>
+  <mat-form-field fxFlex="100">
+    <input matInput type="text" placeholder="City" [(ngModel)]="model.city" name="City" [required]="required">
+  </mat-form-field>
+  <mat-form-field fxFlex="100">
+    <input matInput type="text" placeholder="Country" name="Country" [(ngModel)]="model.country" (change)="updateCountriesList()" (keyup)="updateCountriesList()" [required]="required" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let country of countriesList" [value]="country.name">
+        <img style="vertical-align:middle;" aria-hidden src="{{ country.flag }}" height="25"/>
+        <span>{{ country.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field fxFlex="100">
+    <input matInput type="text" placeholder="Zip Code" [(ngModel)]="model.zipCode" name="Zip Code" [required]="required">
+  </mat-form-field>
+
+  <button fxFlex="100" fxFlex.gt-sm="20" mat-raised-button color="primary" (click)="submitForm(f)" type="submit">Order</button>
+</form>
+
+
+

@@ -18,18 +18,16 @@ export class MainNavbarComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public firebaseUserService: FirebaseUserService,
-    public firebaseShoppingCartService: FirebaseShoppingCartService) {
-      this.firebaseUserService.isAdmin$.subscribe((value) => {
-        console.log(value);
-        this.isAdmin = value;
-        return value;
-      });
-      this.loggedUser$ = this.loginService.userData$;
-      this.itemQuantity$ = this.firebaseShoppingCartService.getAllItemQuantity();
-    }
+    public firebaseShoppingCartService: FirebaseShoppingCartService
+  ) {}
 
   ngOnInit() {
-
+    this.firebaseUserService.isAdmin$.subscribe((value) => {
+      this.isAdmin = value;
+      return value;
+    });
+    this.loggedUser$ = this.loginService.userData$;
+    this.itemQuantity$ = this.firebaseShoppingCartService.getAllItemQuantity();
   }
 
   logout() {

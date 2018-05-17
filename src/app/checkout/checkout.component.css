@@ -1,0 +1,24 @@
+.address-form {
+  width: 100%;
+  margin: 0 0 16px;
+}
+
+.order-items-table {
+  width: 100%;
+}
+
+.mat-radio-group {
+  margin-bottom: 20px;
+}
+
+.cost-section {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  .cost-section {
+    font-size: 15px;
+  }
+}
+

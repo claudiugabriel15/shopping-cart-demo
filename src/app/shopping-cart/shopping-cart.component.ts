@@ -91,18 +91,4 @@ export class ShoppingCartComponent {
   clearAll(item: Item) {
     this.firebaseShoppingCartService.removeMultipleItems(item);
   }
-
-  placeOrder() {
-    this.loginService.userData$.take(1).subscribe(
-      (value) => {
-        if (value) {
-          console.log('order placed');
-        } else {
-          this.router.navigate(['/login'], { queryParams: {'returnUrl': this.route.snapshot.url}});
-          this.alertService.errorAlert('You must login in order to place an order');
-        }
-      }
-    );
-  }
-
 }

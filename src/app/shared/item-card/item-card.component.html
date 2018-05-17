@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>{{ data.name }}</mat-card-title>
     <mat-card-subtitle>
-      {{ data.price | currency: config.get('currency'): true}}
+      {{ data.price | currency: config.get('currency'): 'symbol'}}
     </mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="{{ data.imageURL || 'assets/images/No_image_available.png' }}" [class.out-of-stock]="data.quantity <= 0 && quantity">

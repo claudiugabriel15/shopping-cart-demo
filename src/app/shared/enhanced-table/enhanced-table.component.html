@@ -1,50 +1,52 @@
-<div fxFlex fxLayout="row" fxLayoutAlign="center center">
-  <div fxFlex="90" fxFlex.gt-sm="60">
-    <div fxFlex="100" class="filter-input">
-      <ng-content></ng-content>
 
-      <mat-form-field class="full-width-input">
-        <input matInput placeholder="Search" #search (keyup)="applyFilter($event.target.value)">
-        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="search.value.length > 0" (click)="applyFilter('');search.value = ''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
+  <div fxFlex="100" class="filter-input">
+    <ng-content></ng-content>
 
-    <mat-table #table [dataSource]="dataSource" matSort>
-      <ng-container *ngFor="let column of columns" [matColumnDef]="column.name">
-        <mat-header-cell *matHeaderCellDef [fxFlex]="column.width">{{ column.displayName }}</mat-header-cell>
-        <mat-cell *matCellDef="let element" [fxFlex]="column.width">
-
-          <span *ngIf="(element[column.name] || element[column.name] === 0)  && !column.editable && !column.expression">{{ column.currency ? (element[column.name] | currency: column.currency : 'symbol') : element[column.name] }}</span>
-
-          <span *ngIf="column.expression">{{ column.currency ? (evalExpression(element, column.expression) | currency: column.currency : 'symbol') : evalExpression(element, column.expression) }}</span>
-
-          <button *ngIf="column.name === 'delete'" color="primary" mat-icon-button>
-            <mat-icon aria-label="Delete" (click)="removeItem(element)">clear</mat-icon>
-          </button>
-
-          <div *ngIf="column.name === 'edit'">
-            <button color="primary" class="table-edit-button" fxFlex fxHide fxShow.gt-sm mat-button [routerLink]="element.id"> Edit </button>
-            <button color="primary" class="table-edit-button" fxFlex fxShow fxHide.gt-sm mat-button [routerLink]="element.id"> .. </button>
-          </div>
-
-          <img *ngIf="column.name === 'image'" class="item-image" [src]="element.imageURL" alt="Image not found">
-
-          <input *ngIf="column.editable === true" class="item-quantity" matInput [(ngModel)]="element.quantity" type="number" min="1" max="9999"
-            (change)="editItem(element)" (keyup)="editItem(element)">
-
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [ngClass]="{'even-row': i % 2 === 0}"></mat-row>
-    </mat-table>
-
-    <mat-paginator #paginator
-                    [pageSize]="10"
-                    [pageSizeOptions]="[5, 10, 20]"
-                    [showFirstLastButtons]="true">
-    </mat-paginator>
+    <mat-form-field class="full-width-input" *ngIf="!displayOnly">
+      <input matInput placeholder="Search" #search (keyup)="applyFilter($event.target.value)">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="search.value.length > 0" (click)="applyFilter('');search.value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
   </div>
-</div>
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.name">
+      <mat-header-cell *matHeaderCellDef [fxFlex]="column.width">{{ column.displayName }}</mat-header-cell>
+      <mat-cell *matCellDef="let element" [fxFlex]="column.width">
+
+        <span *ngIf="(element[column.name] || element[column.name] === 0)  && !column.editable && !column.expression && !column.date" [class.warn]="element[column.name] === 0">
+          {{ column.currency ? (element[column.name] | currency: column.currency : 'symbol') : element[column.name] }}
+        </span>
+
+        <span *ngIf="column.expression">{{ column.currency ? (evalExpression(element, column.expression) | currency: column.currency : 'symbol') : evalExpression(element, column.expression) }}</span>
+
+        <span *ngIf="column.date">{{ element[column.name] | date : 'short' : '' : column.date }}</span>
+
+        <button *ngIf="column.name === 'delete' && !displayOnly" color="primary" mat-icon-button>
+          <mat-icon aria-label="Delete" (click)="removeItem(element)">clear</mat-icon>
+        </button>
+
+        <div *ngIf="column.name === 'edit' && !displayOnly">
+          <button color="primary" class="table-edit-button" fxFlex fxHide fxShow.gt-sm mat-button [routerLink]="element.id || element.$key"> Edit </button>
+          <button color="primary" class="table-edit-button" fxFlex fxShow fxHide.gt-sm mat-button [routerLink]="element.id || element.$key"> .. </button>
+        </div>
+
+        <img *ngIf="column.name === 'image'" class="item-image" [src]="element.imageURL || 'assets/images/No_image_available.png'" alt="Image not found">
+
+        <input *ngIf="column.editable === true" class="item-quantity" matInput [(ngModel)]="element.quantity" type="number" min="1" max="9999"
+          (change)="editItem(element)" (keyup)="editItem(element)" [disabled]="displayOnly">
+
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [ngClass]="{'even-row': i % 2 === 0}"></mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="!displayOnly" #paginator
+                  [pageSize]="5"
+                  [pageSizeOptions]="[5, 10, 20]"
+                  [showFirstLastButtons]="true">
+  </mat-paginator>
+
 

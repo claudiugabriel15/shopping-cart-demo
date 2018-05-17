@@ -1,3 +1,8 @@
-<app-enhanced-table [columns]="columns" [rows]="rows | async">
-  <button mat-raised-button color="primary" routerLink="add">Add Item</button>
-</app-enhanced-table>
+<div fxFlex="100" fxLayoutAlign="center center">
+  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <app-enhanced-table [columns]="columns" [rows]="rows | async">
+      <button mat-raised-button color="primary" routerLink="add">Add Item</button>
+    </app-enhanced-table>
+  </div>
+</div>
+
