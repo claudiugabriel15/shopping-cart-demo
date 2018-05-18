@@ -1,6 +1,8 @@
 import { Item } from './item';
 
 export class Order {
+  id?: string;
+  userId?: string;
   initDate: Date;
   shipDate: Date;
   items: Item[];
@@ -13,6 +15,8 @@ export class Order {
   cost: number;
 
   constructor(order: any) {
+    this.id = order.id || '';
+    this.userId = order.userId || '';
     this.initDate = order.initDate || Date.now();
     this.shipDate = order.shipDate || null;
     this.items = order.items || [];

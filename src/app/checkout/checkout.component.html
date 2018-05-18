@@ -1,4 +1,4 @@
-<div fxFlex="100" fxLayoutAlign="center center">
+<div fxFlex="100" fxLayoutAlign="center center" class="app-container">
   <mat-tab-group fxFlex="90" fxFlex.gt-sm="70" fxLayout="column">
     <mat-tab label="Shipping Address">
       <app-address-form class="address-form" [model]="checkout.shipping" [required]="true" (submitAction)="placeOrder()">

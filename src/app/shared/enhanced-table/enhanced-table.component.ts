@@ -64,4 +64,8 @@ export class EnhancedTableComponent implements OnChanges {
 
     return _.isNumber(expressionVal) ? expressionVal : '';
   }
+
+  log(element) {
+    console.log(element);
+  }
 }

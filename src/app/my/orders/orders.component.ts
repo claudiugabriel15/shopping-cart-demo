@@ -41,7 +41,7 @@ export class OrdersComponent {
       'currency': this.config.get('currency')
     },
     {
-      'name': 'edit',
+      'name': 'view',
       'displayName': 'View Details',
       'width': 10,
     }

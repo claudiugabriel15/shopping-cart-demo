@@ -1,3 +1,5 @@
+@import 'config/colors.css';
+
 .full-width-input {
   width: 100%;
   margin-top: 20px;
@@ -12,7 +14,6 @@
 }
 
 .table-edit-button {
-  text-align: left;
   display: flex;
 }
 
@@ -34,12 +35,17 @@
 }
 
 .warn {
-  color: red;
+  color: var(--error-color);
   font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {
   .mat-cell, .mat-header-cell {
     font-size: 10px;
+  }
+
+  .table-edit-button {
+    font-size: small;
+    padding-left: 0px;
   }
 }

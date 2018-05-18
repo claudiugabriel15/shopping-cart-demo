@@ -1,0 +1,23 @@
+.carousel-inner {
+  height: 100vh;
+}
+
+.carousel-item {
+  height: 100vh;
+}
+.carousel-item>img {
+  width: 100vw;
+}
+
+@media screen and (max-width: 1500px) {
+  .carousel-inner {
+    height: 100vh;
+  }
+
+  .carousel-item {
+    height: 100vh;
+  }
+  .carousel-item>img {
+    width: auto;
+  }
+}

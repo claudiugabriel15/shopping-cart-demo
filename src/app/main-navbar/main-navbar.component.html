@@ -3,7 +3,7 @@
   [class.mat-elevation-z4]="true"
   fxFlex="row" fxLayoutAlign="space-between center">
 
-  <div>
+  <div fxFlex="row" fxLayoutAlign="start center">
     <a mat-button routerLink="shopping-cart" routerLinkActive="active-link" class="item-count">
       <mat-icon>shopping_cart</mat-icon>
       <strong>
@@ -11,7 +11,9 @@
       </strong>
     </a>
 
-    <a mat-button routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Items</a>
+    <a mat-button routerLink="items" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Items</a>
+
+    <input class="navbar-search" fxHide.lt-sm #navbarSearch (change)="router.navigateByUrl('items?search=' + navbarSearch.value)">
   </div>
 
   <div>
@@ -29,7 +31,7 @@
 
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item [matMenuTriggerFor]="user">User pages</button>
-      <button mat-menu-item [matMenuTriggerFor]="admin">Admin pages</button>
+      <button mat-menu-item [matMenuTriggerFor]="admin" *ngIf="isAdmin">Admin pages</button>
       <button mat-menu-item (click)="logout()">Log Out</button>
     </mat-menu>
 
@@ -39,9 +41,9 @@
     </mat-menu>
 
     <mat-menu #admin="matMenu">
-      <button mat-menu-item routerLink="/admin/orders" *ngIf="isAdmin" routerLinkActive="active-link">Manage Orders</button>
-      <button mat-menu-item routerLink="/admin/items" *ngIf="isAdmin" routerLinkActive="active-link">Manage Items</button>
-      <button mat-menu-item routerLink="/admin/types" *ngIf="isAdmin"routerLinkActive="active-link">Manage Types</button>
+      <button mat-menu-item routerLink="/admin/items" routerLinkActive="active-link">Manage Items</button>
+      <button mat-menu-item routerLink="/admin/types" routerLinkActive="active-link">Manage Item Types</button>
+      <button mat-menu-item routerLink="/admin/orders" routerLinkActive="active-link">Manage Orders</button>
     </mat-menu>
   </div>
 

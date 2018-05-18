@@ -12,8 +12,9 @@ import * as _ from 'lodash';
   styleUrls: ['./address-form.component.css']
 })
 export class AddressFormComponent implements OnInit {
-  @Input() model: Partial<AccountSettings>;
+  @Input() model: any;
   @Input() required: boolean;
+  @Input() disabled: boolean;
 
   @Output('submitAction') submitAction = new EventEmitter<any>();
 

@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Config } from '../../config/config';
 
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -45,6 +46,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private locationService: LocationService,
     public config: Config,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -134,8 +136,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.firebaseOrdersService.addOrder(newOrder).then(
       () => {
-        this.alertService.successAlert('Order placed successfully');
         this.firebaseShoppingCartService.removeShoppingCart();
+        this.alertService.successAlert('Order placed successfully');
+        this.router.navigateByUrl('/my/orders');
       },
       (error: Error) => {
         this.alertService.errorAlert(error.message);

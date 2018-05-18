@@ -72,13 +72,11 @@ export class ItemsComponent implements OnInit {
     });
   }
 
-  private navigateByType(selectedOptions: any, currentlySelected: MatSelectionListChange) {
+  public navigateByType(selectedOptions: any, currentlySelected: MatSelectionListChange) {
     if (currentlySelected.option.value === 'All') {
-
       selectedOptions.map(
         (selectedOption) => selectedOption.value !== 'All' ? selectedOption.selected = false : selectedOption.selected = true
       );
-
       this.router.navigate(['/'], { queryParams: { search: this.searchInput }});
 
       return;
@@ -94,11 +92,11 @@ export class ItemsComponent implements OnInit {
     this.router.navigate(['/'], { queryParams: { type: this.selectedTypes,  search: this.searchInput }});
   }
 
-  private isTypeSelected(type: string) {
+  public isTypeSelected(type: string) {
     return this.selectedTypes.indexOf(type) !== -1;
   }
 
-  private addSearchParam() {
+  public addSearchParam() {
     const currentQueryParams = this.route.snapshot.queryParams;
     const newQueryParams = _.clone(currentQueryParams);
     newQueryParams['search'] = this.searchInput;

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FirebaseShoppingCartService } from './../services/firebase-shopping-cart.service';
 import { FirebaseUserService } from './../services/firebase-user.service';
 import { LoginService } from './../services/login.service';
@@ -18,7 +19,8 @@ export class MainNavbarComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public firebaseUserService: FirebaseUserService,
-    public firebaseShoppingCartService: FirebaseShoppingCartService
+    public firebaseShoppingCartService: FirebaseShoppingCartService,
+    public router: Router,
   ) {}
 
   ngOnInit() {

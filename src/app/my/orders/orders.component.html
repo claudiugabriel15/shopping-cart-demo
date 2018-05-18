@@ -1,5 +1,6 @@
-<div fxFlex="100" fxLayoutAlign="center center">
+<div fxFlex="100" fxLayoutAlign="center center" class="app-container">
   <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <span class="mat-headline">Order History</span>
     <app-enhanced-table [columns]="columns" [rows]="rows | async"></app-enhanced-table>
   </div>
 </div>

@@ -2,20 +2,21 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~material-design-icons/iconfont/material-icons.css';
 @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+@import 'config/colors.css';
 
 body {
   margin: 0px;
 }
 
 .mat-snack-bar-container.success {
-  background: green;
+  background: var(--success-color);
 }
 
 .mat-snack-bar-container.error {
-  background: #f44336;
+  background: var(--error-color);
 }
 
 .validation-error {
-  color: #f44336;
+  color: var(--error-color);
 }
 

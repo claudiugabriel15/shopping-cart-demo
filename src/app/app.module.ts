@@ -3,6 +3,7 @@ import { AlertService } from './services/alert.service';
 import { FirebaseUserService } from './services/firebase-user.service';
 import { FirebaseShoppingCartService } from './services/firebase-shopping-cart.service';
 import { AdminGuardService } from './services/admin-guard.service';
+
 // Angular Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,6 +38,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 // Firebase modules
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
 import { AppComponent } from './app.component';
@@ -77,10 +81,16 @@ import { AccountComponent } from './my/account/account/account.component';
 import { AddressFormComponent } from './shared/address-form/address-form.component';
 import { FirebaseOrdersService } from './services/firebase-orders.service';
 import { LocationService } from './services/location.service';
+import { OrderDetailsComponent } from './my/order-details/order-details.component';
+import { AdminOrderDetailsComponent } from './admin/admin-order-details/admin-order-details.component';
 
 const APP_ROUTES = [
   {
     path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'items',
     component: ItemsComponent
   },
   {
@@ -99,6 +109,11 @@ const APP_ROUTES = [
   {
     path: 'my/orders',
     component: OrdersComponent,
+    canActivate: [ AuthGuardService ]
+  },
+  {
+    path: 'my/orders/:id',
+    component: OrderDetailsComponent,
     canActivate: [ AuthGuardService ]
   },
   {
@@ -136,7 +151,11 @@ const APP_ROUTES = [
     component: AdminOrdersComponent,
     canActivate: [ AuthGuardService, AdminGuardService ]
   },
-
+  {
+    path: 'admin/orders/:id',
+    component: AdminOrderDetailsComponent,
+    canActivate: [ AuthGuardService, AdminGuardService ]
+  },
   {
     path: '**',
     component: NotFoundComponent
@@ -170,6 +189,8 @@ export function initConfig(config: Config) {
     EnhancedTableComponent,
     AccountComponent,
     AddressFormComponent,
+    OrderDetailsComponent,
+    AdminOrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -180,6 +201,7 @@ export function initConfig(config: Config) {
     FormsModule,
     HttpClientModule,
     HttpModule,
+    NgbModule,
 
     // Angular Material
     MatToolbarModule,
@@ -221,6 +243,7 @@ export function initConfig(config: Config) {
       deps: [Config],
       multi: true,
     },
+    NgbCarouselConfig,
     AngularFireAuth,
     LoginService,
     AlertService,

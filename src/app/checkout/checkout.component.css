@@ -16,6 +16,10 @@
   font-weight: bold;
 }
 
+.mat-tab-group {
+  z-index: 0;
+}
+
 @media screen and (max-width: 600px) {
   .cost-section {
     font-size: 15px;

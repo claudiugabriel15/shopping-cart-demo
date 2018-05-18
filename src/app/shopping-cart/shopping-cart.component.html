@@ -1,4 +1,4 @@
-<div fxFlex="100" fxLayoutAlign="center center">
+<div fxFlex="100" fxLayoutAlign="center center" class="app-container">
   <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
     <app-enhanced-table [columns]="columns" [rows]="rows$ | async" (remove)="clearAll($event)" (edit)="addItem($event)">
       <div fxLayout="row" fxLayoutAlign="space-between center">

@@ -21,15 +21,18 @@
 
         <span *ngIf="column.expression">{{ column.currency ? (evalExpression(element, column.expression) | currency: column.currency : 'symbol') : evalExpression(element, column.expression) }}</span>
 
-        <span *ngIf="column.date">{{ element[column.name] | date : 'short' : '' : column.date }}</span>
+        <span *ngIf="column.date">{{ (element[column.name] | date : 'short' : '' : column.date ) || '-'}}</span>
 
         <button *ngIf="column.name === 'delete' && !displayOnly" color="primary" mat-icon-button>
           <mat-icon aria-label="Delete" (click)="removeItem(element)">clear</mat-icon>
         </button>
 
         <div *ngIf="column.name === 'edit' && !displayOnly">
-          <button color="primary" class="table-edit-button" fxFlex fxHide fxShow.gt-sm mat-button [routerLink]="element.id || element.$key"> Edit </button>
-          <button color="primary" class="table-edit-button" fxFlex fxShow fxHide.gt-sm mat-button [routerLink]="element.id || element.$key"> .. </button>
+          <button color="primary" class="table-edit-button" fxFlex mat-button [routerLink]="element.id"> Edit </button>
+        </div>
+
+        <div *ngIf="column.name === 'view' && !displayOnly">
+          <button color="primary" class="table-edit-button" fxFlex mat-button [routerLink]="element.id" (click)="log(dataSource)"> View </button>
         </div>
 
         <img *ngIf="column.name === 'image'" class="item-image" [src]="element.imageURL || 'assets/images/No_image_available.png'" alt="Image not found">

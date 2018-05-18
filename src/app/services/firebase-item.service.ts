@@ -7,7 +7,16 @@ import { Item } from '../models/item';
 export class FirebaseItemService {
 
   constructor(
-    private db: AngularFireDatabase) {}
+    private db: AngularFireDatabase,
+  ) {}
+
+  private search(search: string, alteredOrdersArray: any[]) {
+    if (search && !_.isEmpty(search.trim())) {
+      _.remove(alteredOrdersArray, (order) => {
+        return order.name.toLowerCase().search(search.toLowerCase());
+      });
+    }
+  }
 
   saveItem(id: string, values: any) {
     return this.db.object('/items/' + id).update(values);
@@ -34,11 +43,7 @@ export class FirebaseItemService {
           });
         }
 
-        if (search && search.trim()) {
-          _.remove(alteredItemArray, (item) => {
-            return item.name.toLowerCase().search(search.toLowerCase());
-          });
-        }
+        this.search(search, alteredItemArray);
 
         return alteredItemArray;
       }

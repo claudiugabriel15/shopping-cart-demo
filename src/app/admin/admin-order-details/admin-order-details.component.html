@@ -1,0 +1,38 @@
+<div fxFlex="100" fxLayoutAlign="center center" class="app-container">
+  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <span class="mat-headline">Order Details</span>
+    <mat-tab-group *ngIf="data">
+      <mat-tab label="Details" fxLayout="column">
+        <mat-form-field fxFlex="100">
+          <mat-label>Order date: </mat-label>
+          <input matInput type="text" [ngModel]="data.initDate | date : 'short' : '' : config.get('dateFormat')" [disabled]="true">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100">
+          <mat-label>Cost: </mat-label>
+          <input matInput type="text" [ngModel]="data.initDate | date : 'short' : '' : config.get('dateFormat')" [disabled]="true">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" *ngIf="data.shipDate; else notShipped" class="order-shipped">
+          <mat-label>Shipping date: </mat-label>
+          <input matInput type="text" [ngModel]="data.shipDate" [disabled]="true">
+        </mat-form-field>
+        <ng-template #notShipped>
+          <mat-form-field fxFlex="100" class="order-not-shipped">
+            <input matInput type="text" placeholder="Not Shipped" [disabled]="true">
+          </mat-form-field>
+        </ng-template>
+
+        <button fxFlex="100" fxFlex.gt-sm="15" mat-raised-button color="primary" (click)="setShipped()">Ship</button>
+      </mat-tab>
+
+      <mat-tab label="Ordered Items">
+        <app-enhanced-table class="order-items-table" [columns]="itemsColumns" [rows]="data.items" [displayOnly]="true"></app-enhanced-table>
+      </mat-tab>
+
+      <mat-tab label="Shipping">
+        <app-address-form [model]="data.shipping" [disabled]="true"></app-address-form>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

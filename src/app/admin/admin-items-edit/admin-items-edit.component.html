@@ -1,6 +1,7 @@
-<div fxFlex fxLayout="row" fxLayoutAlign="center center">
+<div fxFlex fxLayout="row" fxLayoutAlign="center center" class="app-container">
   <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="70px" fxLayoutAlign="space-around center">
     <form #f="ngForm"fxFlex fxLayout="column" fxLayoutAlign="space-between start">
+      <span class="mat-headline">Edit Item</span>
       <div>
         <mat-form-field>
           <input fxFlex matInput type="text" placeholder="Name" [(ngModel)]="data.name" name="name" #name="ngModel" required>

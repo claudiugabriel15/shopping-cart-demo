@@ -1,5 +1,6 @@
-<div fxFlex="100" fxLayoutAlign="center center">
+<div fxFlex="100" fxLayoutAlign="center center" class="app-container">
   <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column">
+    <span class="mat-headline">Manage Item Types</span>
     <app-enhanced-table [columns]="columns" [rows]="rows | async" (remove)="removeType($event)">
     <form #f="ngForm" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign.gt-md="space-between center">
       <mat-form-field class="full-width-input" fxFlex="100" fxFlex.gt-sm="40">
