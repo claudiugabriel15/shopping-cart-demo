@@ -32,6 +32,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -39,7 +41,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+// Bootstrap
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
@@ -73,16 +77,19 @@ import { AdminItemTypesDeleteConfirmationComponent } from './admin/admin-types/a
 // Shared components
 import { ItemCardComponent } from './shared/item-card/item-card.component';
 import { EnhancedTableComponent } from './shared/enhanced-table/enhanced-table.component';
+import { AddressFormComponent } from './shared/address-form/address-form.component';
 
 // Environment
 import { environment } from '../environments/environment';
 import { Config } from '../config/config';
 import { AccountComponent } from './my/account/account/account.component';
-import { AddressFormComponent } from './shared/address-form/address-form.component';
 import { FirebaseOrdersService } from './services/firebase-orders.service';
 import { LocationService } from './services/location.service';
 import { OrderDetailsComponent } from './my/order-details/order-details.component';
 import { AdminOrderDetailsComponent } from './admin/admin-order-details/admin-order-details.component';
+import { RatingService } from './services/rating.service';
+import { ItemComponent } from './item/item.component';
+import { AdminItemsAddImageComponent } from './admin/admin-items-edit/admin-items-add-image/admin-items-add-image.component';
 
 const APP_ROUTES = [
   {
@@ -92,6 +99,10 @@ const APP_ROUTES = [
   {
     path: 'items',
     component: ItemsComponent
+  },
+  {
+    path: 'items/:id',
+    component: ItemComponent
   },
   {
     path: 'login',
@@ -191,6 +202,8 @@ export function initConfig(config: Config) {
     AddressFormComponent,
     OrderDetailsComponent,
     AdminOrderDetailsComponent,
+    ItemComponent,
+    AdminItemsAddImageComponent,
   ],
   imports: [
     BrowserModule,
@@ -223,6 +236,8 @@ export function initConfig(config: Config) {
     MatRadioModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatExpansionModule,
+    MatSliderModule,
 
     // Flex Modules
     FlexLayoutModule,
@@ -234,6 +249,7 @@ export function initConfig(config: Config) {
   entryComponents: [
     AdminItemsDeleteConfirmationComponent,
     AdminItemTypesDeleteConfirmationComponent,
+    AdminItemsAddImageComponent,
   ],
   providers: [
     Config,
@@ -244,6 +260,7 @@ export function initConfig(config: Config) {
       multi: true,
     },
     NgbCarouselConfig,
+    NgbRatingConfig,
     AngularFireAuth,
     LoginService,
     AlertService,
@@ -255,6 +272,7 @@ export function initConfig(config: Config) {
     FirebaseTypeService,
     FirebaseShoppingCartService,
     FirebaseOrdersService,
+    RatingService,
   ],
   bootstrap: [AppComponent]
 })

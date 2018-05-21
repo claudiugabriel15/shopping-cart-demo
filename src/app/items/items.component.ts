@@ -20,8 +20,15 @@ import { FirebaseTypeService } from '../services/firebase-type.service';
 export class ItemsComponent implements OnInit {
   items: any;
   types: Observable<any[]>;
-  searchInput: string;
+  filter = {
+    price: {
+      fromPrice: '',
+      toPrice: ''
+    },
+    types: []
+  };
   selectedTypes: string[];
+  searchInput: string;
   screenWidth: number;
   isHidden = true;
   isSideHidden = false;
@@ -66,7 +73,8 @@ export class ItemsComponent implements OnInit {
         );
         return;
       }
-      this.firebaseItemService.getItemList(params.type, params.search).take(1).subscribe(
+      this.filter.types = params.type;
+      this.firebaseItemService.getItemList(this.filter, params.search).take(1).subscribe(
         (items) => this.items = items
       );
     });
@@ -77,7 +85,7 @@ export class ItemsComponent implements OnInit {
       selectedOptions.map(
         (selectedOption) => selectedOption.value !== 'All' ? selectedOption.selected = false : selectedOption.selected = true
       );
-      this.router.navigate(['/'], { queryParams: { search: this.searchInput }});
+      this.router.navigate(['items'], { queryParams: { search: this.searchInput }});
 
       return;
     }
@@ -89,7 +97,7 @@ export class ItemsComponent implements OnInit {
     });
 
     this.selectedTypes = _.pull(_.map(selectedOptions, 'value'), 'All');
-    this.router.navigate(['/'], { queryParams: { type: this.selectedTypes,  search: this.searchInput }});
+    this.router.navigate(['items'], { queryParams: { type: this.selectedTypes,  search: this.searchInput }});
   }
 
   public isTypeSelected(type: string) {
@@ -100,7 +108,21 @@ export class ItemsComponent implements OnInit {
     const currentQueryParams = this.route.snapshot.queryParams;
     const newQueryParams = _.clone(currentQueryParams);
     newQueryParams['search'] = this.searchInput;
-    this.router.navigate(['/'], { queryParams: newQueryParams });
+    this.router.navigate(['items'], { queryParams: newQueryParams });
+  }
+
+  private updateFromPriceParam() {
+    const currentQueryParams = this.route.snapshot.queryParams;
+    const newQueryParams = _.clone(currentQueryParams);
+    newQueryParams['fromPrice'] = this.filter.price.fromPrice;
+    this.router.navigate(['items'], { queryParams: newQueryParams });
+  }
+
+  private updateToPriceParam() {
+    const currentQueryParams = this.route.snapshot.queryParams;
+    const newQueryParams = _.clone(currentQueryParams);
+    newQueryParams['toPrice'] = this.filter.price.toPrice;
+    this.router.navigate(['items'], { queryParams: newQueryParams });
   }
 
   private addToCart(item: Item) {
@@ -109,6 +131,10 @@ export class ItemsComponent implements OnInit {
 
   private removeFromCart(item: Item) {
     this.shoppingCartService.removeItem(item);
+  }
+
+  private goToItemPage(item: Item) {
+    this.router.navigateByUrl(`items/${item.id}`);
   }
 
   private setColumnNo() {

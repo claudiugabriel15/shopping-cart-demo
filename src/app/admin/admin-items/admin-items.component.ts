@@ -20,12 +20,6 @@ export class AdminItemsComponent {
 
     this.columns = [
     {
-      'name': 'id',
-      'displayName': 'Id',
-      'width': 30,
-      'sort': true,
-    },
-    {
       'name': 'name',
       'displayName': 'Name',
       'width': 30,
@@ -34,14 +28,14 @@ export class AdminItemsComponent {
     {
       'name': 'price',
       'displayName': 'Price',
-      'width': 15,
+      'width': 30,
       'sort': true,
       'currency': this.config.get('currency')
     },
     {
       'name': 'quantity',
       'displayName': 'Quantity',
-      'width': 15,
+      'width': 30,
       'sort': true,
     },
     {

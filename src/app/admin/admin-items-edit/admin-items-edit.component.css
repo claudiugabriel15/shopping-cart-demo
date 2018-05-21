@@ -9,3 +9,12 @@ form {
 .mat-raised-button.mat-primary {
   margin-bottom: 10px;
 }
+
+.item-image {
+  width: 100%;
+  cursor: pointer;
+}
+
+.item-image:hover {
+  background-color: red;
+}

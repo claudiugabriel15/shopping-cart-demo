@@ -1,10 +1,10 @@
 @import 'config/colors.css';
 
-.order-shipped {
+.mat-input-element.order-shipped {
   background-color: var(--success-color);
 }
 
-.order-not-shipped {
+.mat-input-element.order-not-shipped {
   background-color: var(--warn-color);
 }
 

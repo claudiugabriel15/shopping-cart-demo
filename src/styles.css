@@ -4,6 +4,11 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
 @import 'config/colors.css';
 
+/* bootstrap overwrite */
+.mat-card {
+  box-sizing: initial;
+}
+
 body {
   margin: 0px;
 }

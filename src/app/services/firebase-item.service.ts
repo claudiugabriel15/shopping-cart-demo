@@ -10,11 +10,23 @@ export class FirebaseItemService {
     private db: AngularFireDatabase,
   ) {}
 
-  private search(search: string, alteredOrdersArray: any[]) {
+  private search(search: string, alteredItemsArray: Item[]) {
     if (search && !_.isEmpty(search.trim())) {
-      _.remove(alteredOrdersArray, (order) => {
-        return order.name.toLowerCase().search(search.toLowerCase());
-      });
+      _.remove(alteredItemsArray, (item) => !item.name.toLowerCase().includes(search.toLowerCase()));
+    }
+  }
+
+  private filter(filter: any, alteredItemsArray: Item[]) {
+    if (filter && !_.isEmpty(filter.types)) {
+      _.remove(alteredItemsArray, (item) => filter.types.indexOf(item.type) === -1);
+    }
+
+    if (filter && !_.isEmpty(filter.price)) {
+      const fromPrice = _.get(filter, 'price.fromPrice', null);
+      const toPrice = _.get(filter, 'price.toPrice', null);
+
+      _.remove(alteredItemsArray, (item) => fromPrice ? item.price < fromPrice : false);
+      _.remove(alteredItemsArray, (item) => toPrice ? item.price > toPrice : false);
     }
   }
 
@@ -26,7 +38,7 @@ export class FirebaseItemService {
     return this.db.list('/items/').push(values);
   }
 
-  getItemList(types?: string[], search?: string) {
+  getItemList(filter?: any, search?: string, ) {
     return this.db.object('/items').valueChanges().map(
       (items) => {
         const alteredItemArray: Item[] = [];
@@ -35,14 +47,8 @@ export class FirebaseItemService {
           alteredItemArray.push(item);
         });
 
-        // filtering should be done server side...
-
-        if (types) {
-          _.remove(alteredItemArray, (item) => {
-            return types.indexOf(item.type) === -1;
-          });
-        }
-
+        // filtering and searching should be done server side...
+        this.filter(filter, alteredItemArray);
         this.search(search, alteredItemArray);
 
         return alteredItemArray;
@@ -61,5 +67,17 @@ export class FirebaseItemService {
 
   removeItem(id: string) {
     return this.db.object('/items/' + id).remove();
+  }
+
+  addImage(id: string, imageUrl: string) {
+    return this.db.list('/items/' + id + '/images/').push(
+      {
+        'imageUrl': imageUrl
+      }
+    );
+  }
+
+  removeImage(itemId: string, imageId: string) {
+    return this.db.object('/items/' + itemId + '/images/' + imageId).remove();
   }
 }

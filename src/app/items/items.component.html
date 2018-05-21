@@ -2,20 +2,60 @@
   <div class="selection-list mat-elevation-z8">
     <div fxLayout.gt-md="row">
       <div [class.is-side-hidden]="isSideHidden && screenWidth >= 1280" fxFlex.gt-md="100" [hidden]="isHidden && screenWidth < 1280">
-        <mat-form-field >
-          <input matInput placeholder="Search" [(ngModel)]="searchInput" (keyup)="addSearchParam()">
-          <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput = ''; addSearchParam()">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-        <mat-selection-list #selectedTypes (selectionChange)="navigateByType(selectedTypes.selectedOptions.selected, $event)">
-          <mat-list-option value="All" [selected]="isTypeSelected('All')">
-            All
-          </mat-list-option>
-          <mat-list-option *ngFor="let type of types | async" [value]="type.id" [selected]="isTypeSelected(type.id)">
-            {{ type.name }}
-          </mat-list-option>
-        </mat-selection-list>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Search
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-form-field>
+            <input matInput placeholder="Search" [(ngModel)]="searchInput" (keyup)="addSearchParam()">
+            <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput = ''; addSearchParam()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Price range
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div fxLayout="row" fxLayoutAlign="start start">
+            <mat-form-field class="price-filter-input">
+              <input matInput type="number" min="0" placeholder="From" [(ngModel)]="filter.price.fromPrice" (ngModelChange)="updateFromPriceParam()">
+              <button mat-button *ngIf="filter.price.fromPrice" matSuffix mat-icon-button aria-label="Clear" (click)="filter.price.fromPrice = ''; updateFromPriceParam()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field class="price-filter-input">
+              <input matInput type="number" min="0" placeholder="To" [(ngModel)]="filter.price.toPrice" (ngModelChange)="updateToPriceParam()">
+              <button mat-button *ngIf="filter.price.toPrice" matSuffix mat-icon-button aria-label="Clear" (click)="filter.price.toPrice = ''; updateToPriceParam()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Filter by type
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-selection-list #selectedTypes (selectionChange)="navigateByType(selectedTypes.selectedOptions.selected, $event)">
+            <mat-list-option value="All" [selected]="isTypeSelected('All')">
+              All
+            </mat-list-option>
+            <mat-list-option *ngFor="let type of types | async" [value]="type.id" [selected]="isTypeSelected(type.id)">
+              {{ type.name }}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
       </div>
 
       <div fxHide fxShow.gt-md fxLayout="column" fxLayoutAlign="center center">
@@ -40,7 +80,12 @@
 
   <mat-grid-list #gridList [cols]="columnNo || 1" rowHeight="450px" fxFlex="100" gutterSize="10px">
     <mat-grid-tile *ngFor="let item of items">
-      <app-item-card [data]="item" quantity="true" (add)="addToCart(item)" (remove)="removeFromCart(item)"></app-item-card>
+      <app-item-card
+      [data]="item"
+      quantity="true"
+      (add)="addToCart(item)"
+      (remove)="removeFromCart(item)"
+      (card-click)="goToItemPage(item)"></app-item-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/take';
 import { AdminItemsDeleteConfirmationComponent } from './admin-items-delete-confirmation/admin-items-delete-confirmation.component';
+import { AdminItemsAddImageComponent } from './admin-items-add-image/admin-items-add-image.component';
 import { FirebaseTypeService } from '../../services/firebase-type.service';
 import { Config } from '../../../config/config';
 
@@ -88,5 +89,38 @@ export class AdminItemsEditComponent {
         this.data = itemData;
       }
     );
+  }
+
+  addImage() {
+    const dialogRef = this.dialog.open(AdminItemsAddImageComponent, {
+      width: '350px',
+      data: { name: this.data.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.firebaseItemService.addImage(this.data.id, result).then(
+          () => {
+            this.alertService.successAlert('Image added');
+            this.getItemData(this.data.id);
+          },
+          () => {
+            this.alertService.successAlert('Could not add image');
+        });
+      }
+
+      return;
+    });
+  }
+
+  removeImage(image: any) {
+    this.firebaseItemService.removeImage(this.data.id, _.get(image, 'id', null)).then(
+      () => {
+        this.alertService.successAlert('Image removed');
+        this.getItemData(this.data.id);
+      },
+      () => {
+        this.alertService.successAlert('Could not remove image');
+    });
   }
 }

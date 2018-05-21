@@ -10,20 +10,21 @@
 
         <mat-form-field fxFlex="100">
           <mat-label>Cost: </mat-label>
-          <input matInput type="text" [ngModel]="data.initDate | date : 'short' : '' : config.get('dateFormat')" [disabled]="true">
+          <input matInput type="text" [ngModel]="data.cost | currency: config.get('currency')" [disabled]="true">
         </mat-form-field>
 
-        <mat-form-field fxFlex="100" *ngIf="data.shipDate; else notShipped" class="order-shipped">
+        <mat-form-field fxFlex="100" *ngIf="data.shipDate; else notShipped">
           <mat-label>Shipping date: </mat-label>
-          <input matInput type="text" [ngModel]="data.shipDate" [disabled]="true">
+          <input matInput type="text" [ngModel]="data.shipDate | date : 'short' : '' : config.get('dateFormat')" [disabled]="true" class="order-shipped">
         </mat-form-field>
         <ng-template #notShipped>
-          <mat-form-field fxFlex="100" class="order-not-shipped">
-            <input matInput type="text" placeholder="Not Shipped" [disabled]="true">
+          <mat-form-field fxFlex="100">
+            <input matInput type="text" placeholder="Not Shipped" [disabled]="true" class="order-not-shipped">
           </mat-form-field>
         </ng-template>
 
-        <button fxFlex="100" fxFlex.gt-sm="15" mat-raised-button color="primary" (click)="setShipped()">Ship</button>
+        <button fxFlex="100" fxFlex.gt-sm="15" mat-raised-button color="primary" (click)="setShipped()">Set order as Shipped</button>
+
       </mat-tab>
 
       <mat-tab label="Ordered Items">

@@ -1,18 +1,21 @@
 <mat-card>
-  <mat-card-header>
+  <mat-card-header (click)="clickAction()" [style.cursor]="hasClickFunctionality ? 'pointer' : 'initial'">
     <mat-card-title>{{ data.name }}</mat-card-title>
     <mat-card-subtitle>
-      {{ data.price | currency: config.get('currency'): 'symbol'}}
+      <div *ngIf="data.quantity > 0 && quantity">In stock: {{ data.quantity }}</div>
+      <div *ngIf="data.quantity <= 0 && quantity" class="out-of-stock-text">Out of stock</div>
     </mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="{{ data.imageURL || 'assets/images/No_image_available.png' }}" [class.out-of-stock]="data.quantity <= 0 && quantity">
-  <mat-card-content>
-    <p>
-      {{ data.description }}
-    </p>
+  <img mat-card-image
+    src="{{ data.imageURL || 'assets/images/No_image_available.png' }}"
+    [class.out-of-stock]="data.quantity <= 0 && quantity"
+    (click)="clickAction()" [style.cursor]="hasClickFunctionality ? 'pointer' : 'initial'">
+  <mat-card-content >
+    <strong>{{ data.price | currency: config.get('currency'): 'symbol'}}</strong>
+    <ngb-rating [(rate)]="avgRating" readonly="true" max="5"></ngb-rating>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-    <div *ngIf="quantity != undefined" fxFlex fxLayout="row" [ngStyle]="{'place-content': (cartItemQuantity | async) > 0 ? 'center space-between' : 'center center'}">
+    <div [hidden]="!quantity" fxFlex fxLayout="row" [ngStyle]="{'place-content': (cartItemQuantity | async) > 0 ? 'center space-between' : 'center center'}">
       <button *ngIf="hasRemoveFunctionality && (cartItemQuantity | async)" mat-raised-button color="warn" (click)="removeItem()">Remove</button>
       <div [hidden]="!((cartItemQuantity | async) > 0)" class="item-count">
         <mat-icon>shopping_cart</mat-icon>
@@ -20,7 +23,7 @@
       </div>
       <button [disabled]="data.quantity <=  0" *ngIf="hasAddFunctionality" mat-raised-button color="primary" (click)="addItem()">Add</button>
     </div>
-    <div *ngIf="quantity === undefined">
+    <div [hidden]="quantity">
       <button *ngIf="hasRemoveFunctionality" mat-raised-button color="warn" (click)="removeItem()">Remove</button>
       <button *ngIf="hasAddFunctionality" mat-raised-button color="primary" (click)="addItem()">Add</button>
     </div>

@@ -1,7 +1,4 @@
-<form #f="ngForm" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between start">
-  <mat-form-field fxFlex="100">
-    <textarea matInput type="text" placeholder="Address" [(ngModel)]="model.address" name="Address" [required]="required" [disabled]="disabled"></textarea>
-  </mat-form-field>
+<form #f="ngForm" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between start" class="app-container">
   <ng-content></ng-content>
   <mat-form-field fxFlex="100">
     <input matInput type="text" placeholder="City" [(ngModel)]="model.city" name="City" [required]="required" [disabled]="disabled">
@@ -15,6 +12,9 @@
         <span>{{ country.name }}</span>
       </mat-option>
     </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field fxFlex="100">
+    <textarea matInput type="text" placeholder="Address" [(ngModel)]="model.address" name="Address" [required]="required" [disabled]="disabled"></textarea>
   </mat-form-field>
   <mat-form-field fxFlex="100">
     <input matInput type="text" placeholder="Zip Code" [(ngModel)]="model.zipCode" name="Zip Code" [required]="required" [disabled]="disabled">

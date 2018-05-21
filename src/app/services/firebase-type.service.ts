@@ -12,6 +12,15 @@ export class FirebaseTypeService {
     private firebaseItemService: FirebaseItemService
   ) {}
 
+  private search(search: string, alteredTypesArray: Type[]) {
+    if (search && !_.isEmpty(search.trim())) {
+      _.remove(alteredTypesArray, (type) => {
+        return !(type.name.toLowerCase().search(search.toLowerCase())
+          || type.id.toLowerCase().search(search.toLowerCase()));
+        });
+    }
+  }
+
   getTypes(search?: string) {
     return this.db.object('/types').valueChanges().map(
       (types) => {
@@ -22,12 +31,7 @@ export class FirebaseTypeService {
           alteredTypesArray.push(newType);
         });
 
-        // filtering should be done server side...
-        if (search) {
-          _.remove(alteredTypesArray, (type) => {
-            return type.name.toLowerCase().search(search.toLowerCase());
-          });
-        }
+        this.search(search, alteredTypesArray);
 
         return alteredTypesArray;
       }

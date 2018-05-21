@@ -30,6 +30,7 @@
     "bootstrap": "^4.1.1",
     "core-js": "^2.4.1",
     "firebase": "^4.12.1",
+    "hammer": "^0.0.5",
     "lodash": "^4.17.5",
     "material-design-icons": "^3.0.1",
     "rxjs": "^5.5.6",

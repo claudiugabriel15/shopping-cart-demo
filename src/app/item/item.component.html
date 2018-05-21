@@ -1,0 +1,17 @@
+<div fxFlex fxLayout="row" fxLayoutAlign="center center" class="app-container">
+  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="70px" fxLayoutAlign="space-around center">
+      <ngb-carousel>
+        <ng-template ngbSlide *ngFor="let image of data.images">
+          <img [src]="image.imageUrl" alt="First slide">
+          <!--
+          <div class="carousel-caption">
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </div>
+          -->
+
+        </ng-template>
+      </ngb-carousel>
+      {{ data | json}}
+  </div>
+</div>

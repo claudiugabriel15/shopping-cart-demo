@@ -65,13 +65,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         default: true
       },
       {
-        value: 'Get location by IP',
+        value: 'Get location from IP',
         action: this.populateShippingFieldsByIP
       },
-      {
-        value: 'Use Account Settings',
-        disabled: true
-      }
+      // {
+      //   value: 'Use Account Settings',
+      //   disabled: true
+      // }
     ];
 
     this.columns = [
@@ -123,7 +123,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     .then((locationData) => {
       _.set(scope, 'checkout.shipping.city', _.get(locationData, 'city'));
       _.set(scope, 'checkout.shipping.country', _.get(locationData, 'country'));
-      _.set(scope, 'checkout.shipping.zipCode', _.get(locationData, 'zip'));
     });
   }
 

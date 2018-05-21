@@ -1,57 +1,76 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="center center" class="app-container">
-  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="70px" fxLayoutAlign="space-around center">
-    <form #f="ngForm"fxFlex fxLayout="column" fxLayoutAlign="space-between start">
-      <span class="mat-headline">Edit Item</span>
-      <div>
-        <mat-form-field>
-          <input fxFlex matInput type="text" placeholder="Name" [(ngModel)]="data.name" name="name" #name="ngModel" required>
-          <mat-hint *ngIf="name.touched && name.invalid" align="start"><strong class="validation-error">Field is required.</strong> </mat-hint>
-        </mat-form-field>
+  <mat-tab-group fxFlex="90" fxFlex.gt-sm="70">
+    <mat-tab label="Edit Item">
+      <div fxLayout="column" fxLayout.gt-sm="row" class="app-container" fxLayoutGap.gt-sm="70px" fxLayoutAlign="space-around center">
+        <form #f="ngForm"fxFlex fxLayout="column" fxLayoutAlign="space-between start" >
+          <div>
+            <mat-form-field>
+              <input fxFlex matInput type="text" placeholder="Name" [(ngModel)]="data.name" name="name" #name="ngModel" required>
+              <mat-hint *ngIf="name.touched && name.invalid" align="start"><strong class="validation-error">Field is required.</strong> </mat-hint>
+            </mat-form-field>
 
-        <mat-form-field>
-          <mat-select placeholder="Type" [(ngModel)]="data.type" name="type" #type="ngModel" required>
-            <mat-option *ngFor="let type of types | async" [value]="type.id">
-              {{ type.name }}
-            </mat-option>
-          </mat-select>
-          <mat-hint *ngIf="type.touched && type.invalid" align="start"><strong class="validation-error">Field is required.</strong> </mat-hint>
-        </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Type" [(ngModel)]="data.type" name="type" #type="ngModel" required>
+                <mat-option *ngFor="let type of types | async" [value]="type.id">
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="type.touched && type.invalid" align="start"><strong class="validation-error">Field is required.</strong> </mat-hint>
+            </mat-form-field>
 
-        <mat-form-field>
-          <input matInput type="number" placeholder="Price" [(ngModel)]="data.price" name="price" step="0.01" #price="ngModel"
-          pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" required>
-          <mat-hint *ngIf="price.touched && price.invalid" align="start">
-            <strong *ngIf="price?.errors.required"  class="validation-error">Field is required.</strong>
-            <strong *ngIf="price?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
-          </mat-hint>
-        </mat-form-field>
+            <mat-form-field>
+              <input matInput type="number" placeholder="Price" [(ngModel)]="data.price" name="price" step="0.01" #price="ngModel"
+              pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" required>
+              <mat-hint *ngIf="price.touched && price.invalid" align="start">
+                <strong *ngIf="price?.errors.required"  class="validation-error">Field is required.</strong>
+                <strong *ngIf="price?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
+              </mat-hint>
+            </mat-form-field>
 
-        <mat-form-field>
-          <input matInput type="url" placeholder="Image URL" [(ngModel)]="data.imageURL" name="imageURL">
-          <button mat-button *ngIf="data.imageURL" matSuffix mat-icon-button aria-label="Clear" (click)="data.imageURL=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
+            <mat-form-field>
+              <input matInput type="url" placeholder="Image URL" [(ngModel)]="data.imageURL" name="imageURL">
+              <button mat-button *ngIf="data.imageURL" matSuffix mat-icon-button aria-label="Clear" (click)="data.imageURL=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
 
-        <mat-form-field>
-          <textarea  matInput type="url" placeholder="Description" [(ngModel)]="data.description" name="description"></textarea>
-        </mat-form-field>
+            <mat-form-field>
+              <textarea  matInput type="url" placeholder="Description" [(ngModel)]="data.description" name="description"></textarea>
+            </mat-form-field>
 
-        <mat-form-field>
-          <input matInput type="number" placeholder="Quantity" [(ngModel)]="data.quantity" name="quantity" step="1" #quantity="ngModel"
-          pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$">
-          <mat-hint *ngIf="quantity?.touched && quantity.invalid" align="start">
-            <strong *ngIf="quantity?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
-          </mat-hint>
-        </mat-form-field>
+            <mat-form-field>
+              <input matInput type="number" placeholder="Quantity" [(ngModel)]="data.quantity" name="quantity" step="1" #quantity="ngModel"
+              pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$">
+              <mat-hint *ngIf="quantity?.touched && quantity.invalid" align="start">
+                <strong *ngIf="quantity?.errors.pattern" class="validation-error">Minimum value is 0.</strong>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div>
+              <button mat-raised-button color="primary" [disabled]="!f.dirty || !f.valid" (click)="submit(f)">Save</button>
+          </div>
+        </form>
+        <app-item-card [data]="data" (remove)="removeItem()" quantity="true"></app-item-card>
       </div>
-      <div>
-          <button mat-raised-button color="primary" [disabled]="!f.dirty || !f.valid" (click)="submit(f)">Save</button>
-      </div>
-    </form>
+    </mat-tab>
 
-    <app-item-card [data]="data" (remove)="removeItem()"></app-item-card>
-  </div>
+    <mat-tab label="Item Images">
+      <div class="app-container">
+        <mat-grid-list cols="4" rowHeight="100px" gutterSize="15px">
+          <mat-grid-tile *ngFor="let image of data.images" (click)="removeImage(image)">
+            <img [src]="image.imageUrl" class="item-image">
+          </mat-grid-tile>
+
+          <mat-grid-tile
+              [style.background-color]="'lightgray'"
+              [style.cursor]="'pointer'"
+              (click)="addImage()">
+              <mat-icon>add_circle_outline</mat-icon>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
 
