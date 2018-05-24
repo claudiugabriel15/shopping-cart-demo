@@ -1,7 +1,7 @@
 <div fxFlex="100" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign="space-between start" class="app-container">
   <div class="selection-list mat-elevation-z8">
     <div fxLayout.gt-md="row">
-      <div [class.is-side-hidden]="isSideHidden && screenWidth >= 1280" fxFlex.gt-md="100" [hidden]="isHidden && screenWidth < 1280">
+      <div [class.is-side-hidden]="isSideHidden && screenWidth >= 1280" fxFlex.gt-md="100" [hidden]="isHidden && screenWidth < 1280" class="criteria-container">
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -78,14 +78,24 @@
     </div>
   </div>
 
-  <mat-grid-list #gridList [cols]="columnNo || 1" rowHeight="450px" fxFlex="100" gutterSize="10px">
+  <mat-grid-list *ngIf="loaded" #gridList [cols]="columnNo || 1" rowHeight="450px" fxFlex="100" gutterSize="10px">
     <mat-grid-tile *ngFor="let item of items">
-      <app-item-card
+      <app-item-card *ngIf="items.length !== 0"
       [data]="item"
       quantity="true"
       (add)="addToCart(item)"
       (remove)="removeFromCart(item)"
-      (card-click)="goToItemPage(item)"></app-item-card>
+      (cardClick)="goToItemPage(item)"></app-item-card>
     </mat-grid-tile>
+
+    <div *ngIf="items.length === 0">
+      <strong>No results.</strong>
+    </div>
   </mat-grid-list>
+
+  <mat-progress-spinner class="loading-spinner"
+    *ngIf="!loaded"
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
 </div>

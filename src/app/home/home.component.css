@@ -1,21 +1,43 @@
 .carousel-inner {
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
-
 .carousel-item {
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
 .carousel-item>img {
   width: 100vw;
 }
+.carousel-caption {
+  background-color: rgba(0,0,0,0.5);
+  left: 0;
+  right: 0;
+  padding: 40px 0;
+  bottom: unset;
+  top: calc(40vh - 40px);
+}
+.carousel-caption>* {
+  margin: 0 15%;
+}
+.contact-section {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  padding: 10px 0;
+}
+
+.carousel-indicators {
+  display: none;
+}
 
 @media screen and (max-width: 1500px) {
   .carousel-inner {
-    height: 100vh;
+    height: calc(100vh - 40px);
   }
 
   .carousel-item {
-    height: 100vh;
+    height: calc(100vh - 40px);
   }
   .carousel-item>img {
     width: auto;

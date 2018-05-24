@@ -19,6 +19,7 @@ export class EnhancedTableComponent implements OnChanges {
 
   @Output('remove') remove = new EventEmitter<any>();
   @Output('edit') edit = new EventEmitter<any>();
+  @Output('cardClick') cardClick = new EventEmitter<any>();
 
   displayedColumns: string[];
   dataSource: MatTableDataSource<any>;
@@ -65,7 +66,7 @@ export class EnhancedTableComponent implements OnChanges {
     return _.isNumber(expressionVal) ? expressionVal : '';
   }
 
-  log(element) {
-    console.log(element);
+  clickAction(element: any) {
+    this.cardClick.emit(element);
   }
 }

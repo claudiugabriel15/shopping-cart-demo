@@ -56,7 +56,7 @@ export class ShoppingCartComponent {
         'currency': this.config.get('currency')
       },
       {
-        'name': 'quantity',
+        'name': 'cartQuantity',
         'displayName': 'Quantity',
         'width': 20,
         'sort': true,
@@ -66,7 +66,7 @@ export class ShoppingCartComponent {
         'name': 'total_price',
         'displayName': 'Total Price',
         'expression': {
-          'variables': ['price', 'quantity'],
+          'variables': ['price', 'cartQuantity'],
           'operation': '*'
         },
         'width': 10,
@@ -81,7 +81,7 @@ export class ShoppingCartComponent {
   }
 
   addItem(item: Item) {
-    this.firebaseShoppingCartService.addItem(item, item.quantity);
+    this.firebaseShoppingCartService.addItem(item, item.cartQuantity);
   }
 
   removeItem(item: Item) {
@@ -90,5 +90,9 @@ export class ShoppingCartComponent {
 
   clearAll(item: Item) {
     this.firebaseShoppingCartService.removeMultipleItems(item);
+  }
+
+  private goToItemPage(item: Item) {
+    this.router.navigateByUrl(`items/${item.id}`);
   }
 }

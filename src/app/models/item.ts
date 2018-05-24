@@ -6,6 +6,7 @@ export class Item {
   public description?: string;
   public id?: string;
   public quantity?: number;
+  public cartQuantity?: number;
   public images?: string[];
 
   constructor(item: any) {
@@ -16,6 +17,7 @@ export class Item {
     this.description = item.description || '';
     this.id = item.id || '';
     this.quantity = item.quantity || 0;
+    this.cartQuantity = item.cartQuantity || 0;
     this.images = this.buildItemsArray(item.images);
   }
 

@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Item } from '../models/item';
@@ -9,24 +10,14 @@ import 'rxjs/operator/';
 
 @Injectable()
 export class FirebaseShoppingCartService {
+  cartIdChange = new BehaviorSubject<string>('');
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) {
+    this.cartIdChange.next(localStorage.getItem('shoppingCartId'));
+  }
 
   private getCartId() {
-    const shoppingCartId = localStorage.getItem('shoppingCartId');
-    if (!shoppingCartId) {
-      const currentDateTime = new Date().getTime();
-      this.db.list('/shopping-carts').push({
-        dateAdded: currentDateTime
-      }).then(
-        response => {
-          localStorage.setItem('shoppingCartId', response.key);
-          return response.key;
-        }
-      );
-    } else {
-      return shoppingCartId;
-    }
+    return localStorage.getItem('shoppingCartId') || null;
   }
 
   public removeShoppingCart() {
@@ -48,24 +39,41 @@ export class FirebaseShoppingCartService {
     return this.db.object('/shopping-carts/' + shoppingCartId + '/items');
   }
 
-  addItem(item: Item, quantity?: number) {
+  addItem(item: Item, cartQuantity?: number) {
     const shoppingCartId = this.getCartId();
 
+    if (!shoppingCartId) {
+      const currentDateTime = new Date().getTime();
+      this.db.list('/shopping-carts').push({
+        dateAdded: currentDateTime
+      }).then(
+        response => {
+          localStorage.setItem('shoppingCartId', response.key);
+          this.cartIdChange.next(response.key);
+          this.updateItemQuantity(response.key, item, cartQuantity);
+        }
+      );
+    } else {
+      this.updateItemQuantity(shoppingCartId, item, cartQuantity);
+    }
+  }
+
+  updateItemQuantity(shoppingCartId: string, item: Item, cartQuantity: number) {
     this.getItem(shoppingCartId, item.id).valueChanges().take(1).subscribe(
       addedItem => {
         if (!addedItem) {
-          item.quantity = 1;
+          item.cartQuantity = 1;
           this.getItem(shoppingCartId, item.id).set(
             item
           );
-        } else if (quantity) {
+        } else if (cartQuantity) {
           this.getItem(shoppingCartId, item.id).update({
-            quantity: quantity
+            cartQuantity: cartQuantity
           });
         } else {
-          const currentQuantity = _.get(addedItem, 'quantity', 0);
+          const currentQuantity = _.get(addedItem, 'cartQuantity', 0);
           this.getItem(shoppingCartId, item.id).update({
-            quantity: currentQuantity + 1
+            cartQuantity: currentQuantity + 1
           });
         }
       }
@@ -80,11 +88,11 @@ export class FirebaseShoppingCartService {
         if (!removedItem) {
           return;
         } else {
-          const currentQuantity = _.get(removedItem, 'quantity', 0);
+          const currentQuantity = _.get(removedItem, 'cartQuantity', 0);
 
           if (currentQuantity > 1) {
             this.getItem(shoppingCartId, item.id).update({
-              quantity: currentQuantity - 1
+              cartQuantity: currentQuantity - 1
             });
           } else {
             this.getItem(shoppingCartId, item.id).remove();
@@ -117,30 +125,30 @@ export class FirebaseShoppingCartService {
   }
 
   getItemQuantity(item: Item) {
-    const shoppingCartId = this.getCartId();
-
-    return this.getItem(shoppingCartId, item.id).valueChanges().map(
-      foundItem => {
-        if (!foundItem) {
-          return;
-        } else {
-          return _.get(foundItem, 'quantity', 0);
+    return this.cartIdChange.switchMap((id) => {
+      return this.getItem(id, item.id).valueChanges().map(
+        foundItem => {
+          if (!foundItem) {
+            return;
+          } else {
+            return _.get(foundItem, 'cartQuantity', 0);
+          }
         }
-      }
-    );
+      );
+    });
   }
 
   getAllItemQuantity() {
-    const shoppingCartId = this.getCartId();
+    return this.cartIdChange.switchMap((id) => {
+      return this.getFirebaseItems(id).valueChanges().map(
+        items => {
+          let cartQuantity = 0;
+          _.each(items, (item) => cartQuantity = cartQuantity + _.get(item, 'cartQuantity', 0));
 
-    return this.getFirebaseItems(shoppingCartId).valueChanges().map(
-      items => {
-        let quantity = 0;
-        _.each(items, (item) => quantity = quantity + _.get(item, 'quantity', 0));
-
-        return quantity;
-      }
-    );
+          return cartQuantity;
+        }
+      );
+    });
   }
 
   getTotalCost() {
@@ -150,7 +158,7 @@ export class FirebaseShoppingCartService {
       items => {
         let cost = 0;
         _.each(items,
-          (item) => cost = cost + _.get(item, 'quantity', 0) * item.price
+          (item) => cost = cost + _.get(item, 'cartQuantity', 0) * item.price
         );
         return cost;
       }

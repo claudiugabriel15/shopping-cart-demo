@@ -4,8 +4,9 @@
   fxFlex="row" fxLayoutAlign="space-between center">
 
   <div fxFlex="row" fxLayoutAlign="start center">
-    <a mat-button routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a mat-button routerLink="items" routerLinkActive="active-link">Items</a>
+    <button mat-icon-button fxHide fxShow.lt-md (click)="sidebarService.toggle()"><mat-icon>menu</mat-icon></button>
+    <a mat-button fxHide.lt-md routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a mat-button fxHide.lt-md routerLink="items" routerLinkActive="active-link">Items</a>
     <a mat-button routerLink="shopping-cart" routerLinkActive="active-link" class="item-count">
       <mat-icon>shopping_cart</mat-icon>
       <strong>
@@ -13,7 +14,10 @@
       </strong>
     </a>
 
-    <input class="navbar-search" fxHide.lt-md #navbarSearch (change)="router.navigateByUrl('items?search=' + navbarSearch.value)">
+    <div class="navbar-serach-container">
+      <input class="navbar-search" #navbarSearch (change)="router.navigateByUrl('items?search=' + navbarSearch.value)">
+      <mat-icon class="navbar-search-icon">search</mat-icon>
+    </div>
   </div>
 
   <div>
@@ -36,10 +40,6 @@
     </mat-menu>
 
     <mat-menu #user="matMenu">
-      <!--
-        <button mat-menu-item routerLink="/my/account" routerLinkActive="active-link" [disabled]="true">Account Settings</button>
-      -->
-
       <button mat-menu-item routerLink="/my/orders" routerLinkActive="active-link">Orders</button>
     </mat-menu>
 
@@ -49,5 +49,4 @@
       <button mat-menu-item routerLink="/admin/orders" routerLinkActive="active-link">Manage Orders</button>
     </mat-menu>
   </div>
-
 </mat-toolbar>

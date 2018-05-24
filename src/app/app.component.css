@@ -1,8 +1,30 @@
 .app-container {
-  padding-top: 40px;
+  padding: 40px 0px;
+}
+
+.mat-drawer-container.mat-sidenav-container {
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+}
+
+.mat-drawer {
+  width: 30vw;
 }
 
 .mat-form-field {
   margin-bottom: 10px;
   width: 100%;
+}
+
+.mat-progress-spinner.loading-spinner {
+  position: fixed;
+  left: calc(-50vw + 50%);
+  right: calc(-50vw + 50%);
+  margin-left: auto;
+  margin-right: auto;
+  top: calc(-50vh + 50%);
+  bottom: calc(-50vh + 50%);
+  margin-top: auto;
+  margin-bottom: auto;
 }

@@ -12,7 +12,7 @@
     (click)="clickAction()" [style.cursor]="hasClickFunctionality ? 'pointer' : 'initial'">
   <mat-card-content >
     <strong>{{ data.price | currency: config.get('currency'): 'symbol'}}</strong>
-    <ngb-rating [(rate)]="avgRating" readonly="true" max="5"></ngb-rating>
+    <app-rating-stars readonly="true" [rating]="rating | async"></app-rating-stars>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
     <div [hidden]="!quantity" fxFlex fxLayout="row" [ngStyle]="{'place-content': (cartItemQuantity | async) > 0 ? 'center space-between' : 'center center'}">

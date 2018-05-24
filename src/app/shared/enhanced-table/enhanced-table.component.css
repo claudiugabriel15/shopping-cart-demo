@@ -10,7 +10,7 @@
 }
 
 .mat-row.even-row {
-  background-color: rgba(0,0,0,.04);
+  background-color: var(--background-color);
 }
 
 .table-edit-button {

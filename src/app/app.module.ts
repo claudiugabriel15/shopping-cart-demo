@@ -34,6 +34,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -78,6 +80,7 @@ import { AdminItemTypesDeleteConfirmationComponent } from './admin/admin-types/a
 import { ItemCardComponent } from './shared/item-card/item-card.component';
 import { EnhancedTableComponent } from './shared/enhanced-table/enhanced-table.component';
 import { AddressFormComponent } from './shared/address-form/address-form.component';
+import { RatingStarsComponent } from './shared/rating-stars/rating-stars.component';
 
 // Environment
 import { environment } from '../environments/environment';
@@ -90,6 +93,7 @@ import { AdminOrderDetailsComponent } from './admin/admin-order-details/admin-or
 import { RatingService } from './services/rating.service';
 import { ItemComponent } from './item/item.component';
 import { AdminItemsAddImageComponent } from './admin/admin-items-edit/admin-items-add-image/admin-items-add-image.component';
+import { SidebarService } from './services/sidebar.service';
 
 const APP_ROUTES = [
   {
@@ -204,6 +208,7 @@ export function initConfig(config: Config) {
     AdminOrderDetailsComponent,
     ItemComponent,
     AdminItemsAddImageComponent,
+    RatingStarsComponent,
   ],
   imports: [
     BrowserModule,
@@ -238,6 +243,8 @@ export function initConfig(config: Config) {
     MatTabsModule,
     MatExpansionModule,
     MatSliderModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
 
     // Flex Modules
     FlexLayoutModule,
@@ -273,6 +280,7 @@ export function initConfig(config: Config) {
     FirebaseShoppingCartService,
     FirebaseOrdersService,
     RatingService,
+    SidebarService,
   ],
   bootstrap: [AppComponent]
 })

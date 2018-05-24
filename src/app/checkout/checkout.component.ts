@@ -94,7 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         'currency': this.config.get('currency')
       },
       {
-        'name': 'quantity',
+        'name': 'cartQuantity',
         'displayName': 'Quantity',
         'width': 20,
         'sort': true,
@@ -104,7 +104,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         'name': 'total_price',
         'displayName': 'Total Price',
         'expression': {
-          'variables': ['price', 'quantity'],
+          'variables': ['price', 'cartQuantity'],
           'operation': '*'
         },
         'width': 10,

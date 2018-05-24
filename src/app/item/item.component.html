@@ -1,17 +1,76 @@
-<div fxFlex fxLayout="row" fxLayoutAlign="center center" class="app-container">
-  <div fxFlex="90" fxFlex.gt-sm="60" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="70px" fxLayoutAlign="space-around center">
-      <ngb-carousel>
-        <ng-template ngbSlide *ngFor="let image of data.images">
-          <img [src]="image.imageUrl" alt="First slide">
-          <!--
-          <div class="carousel-caption">
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </div>
-          -->
+<div *ngIf="loaded" fxLayout="column" fxLayoutAlign="space-between stretch">
+  <div
+    fxFlex="90" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="50px"
+    fxLayout.gt-sm="row" fxFlex.gt-sm="60" fxLayoutAlign.gt-sm="center stretch" class="app-container background-color" fxLayoutGap.gt-sm="0px">
 
-        </ng-template>
-      </ngb-carousel>
-      {{ data | json}}
+    <div fxFlex="90" fxFlex.gt-sm="20" fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.gt-sm="space-between start">
+      <div fxFlex="50">
+        <h2>{{ data.name }}</h2>
+        <div class="mat-title">{{ typeName | async}}</div>
+        <div class="mat-subheading-2"><strong>{{ data.price | currency: config.get('currency')}}</strong></div>
+        <div class="mat-subheading-1">{{ data.quantity > 0 ? 'In stock: ' + data.quantity : 'Out of stock' }}</div>
+      </div>
+
+      <div>
+        <div fxLayout="column">
+          <div class="mat-caption">Your rating: </div>
+          <app-rating-stars
+            [readonly]="false"
+            [rating]="userRating | async"
+            floatLeft="true"
+            (edit)="updateRating($event)"></app-rating-stars>
+        </div>
+        <div fxLayout="column">
+          <div class="mat-caption">Average rating: </div>
+          <app-rating-stars [readonly]="true" [rating]="rating | async" floatLeft="true"></app-rating-stars>
+        </div>
+        <button mat-raised-button color="primary" (click)="addToCart()" class="add-to-cart-button">Add to Shopping Cart</button>
+      </div>
+    </div>
+
+    <div fxFlex="90" fxFlex.gt-sm="40" fxLayout="column">
+      <img fxFlex [src]="data.imageURL || 'assets/images/No_image_available.png'" class="item-details-image">
+      <div fxFlex fxLayout="column" fxLayout="row wrap" class="preview-image-container">
+        <div *ngFor="let image of data.images" (click)="data.imageURL = image.imageUrl">
+          <img [src]="image.imageUrl" class="preview-image">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+    <div fxLayout.gt-sm="row" fxFlex.gt-sm="100" fxLayoutAlign.gt-sm="center stretch" fxLayoutAlign="center center" class="app-container">
+      <div fxLayout="column" fxFlex="90" fxFlex.gt-sm="60" fxLayoutAlign="start start">
+          <div>
+            <h2>Description</h2>
+            <br>
+            <section *ngIf="data.description" innerHTML="{{ data.description }}"></section>
+            <span *ngIf="!data.description"><strong>No description.</strong></span>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+    <div fxLayout.gt-sm="row" fxFlex.gt-sm="100" fxLayoutAlign.gt-sm="center stretch" fxLayoutAlign="center center" class="app-container background-color">
+      <div fxLayout="column" fxFlex="90" fxFlex.gt-sm="60" fxLayoutAlign="start start">
+        <h2>Other items of this type:</h2>
+        <br>
+        <mat-grid-list [hidden]="(items | async)?.length === 0" #gridList [cols]="columnNo || 1" rowHeight="400px" fxFlex="100" gutterSize="10px" class="other-type-grid">
+          <mat-grid-tile *ngFor="let item of items | async | slice:0:5">
+            <app-item-card [data]="item" (cardClick)="goToItemPage(item)"></app-item-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <span *ngIf="(items | async)?.length === 0"><strong>No other items of this type.</strong></span>
+      </div>
+    </div>
   </div>
 </div>
+
+<mat-progress-spinner class="loading-spinner"
+  *ngIf="!loaded"
+  color="primary"
+  mode="indeterminate">
+</mat-progress-spinner>

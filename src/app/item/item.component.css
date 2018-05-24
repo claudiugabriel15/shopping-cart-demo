@@ -1,25 +1,28 @@
-.carousel-inner {
-  height: 200px;
-}
-.carousel-item {
-  height: 200px;
+@import 'config/colors.css';
+
+.item-details-image {
+  width: 100%;
+  height: auto;
 }
 
-.carousel-item>img {
-  max-width: 70vw;
+.preview-image {
+  max-height: 50px;
+  cursor: pointer;
+  margin: 5px;
 }
 
-/*
-@media screen and (max-width: 1500px) {
-  .carousel-inner {
-    height: 100vh;
-  }
-
-  .carousel-item {
-    height: 100vh;
-  }
-  .carousel-item>img {
-    width: auto;
-  }
+.preview-image-container {
+  background-color: black;
 }
-*/
+
+.add-to-cart-button {
+  margin-top: 10px;
+}
+
+.other-type-grid {
+  width: 100%;
+}
+
+.background-color {
+  background-color: var(--background-color);
+}

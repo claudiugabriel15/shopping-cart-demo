@@ -1,5 +1,5 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="center center" class="app-container">
-  <mat-tab-group fxFlex="90" fxFlex.gt-sm="70">
+  <mat-tab-group *ngIf="loaded" fxFlex="90" fxFlex.gt-sm="70">
     <mat-tab label="Edit Item">
       <div fxLayout="column" fxLayout.gt-sm="row" class="app-container" fxLayoutGap.gt-sm="70px" fxLayoutAlign="space-around center">
         <form #f="ngForm"fxFlex fxLayout="column" fxLayoutAlign="space-between start" >
@@ -71,6 +71,11 @@
       </div>
     </mat-tab>
   </mat-tab-group>
+  <mat-progress-spinner class="loading-spinner"
+    *ngIf="!loaded"
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
 </div>
 
 

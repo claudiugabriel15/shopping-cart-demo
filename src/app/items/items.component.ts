@@ -33,6 +33,7 @@ export class ItemsComponent implements OnInit {
   isHidden = true;
   isSideHidden = false;
   columnNo = 1;
+  loaded = false;
 
   @ViewChild('gridList') gridListElem: ElementRef;
 
@@ -69,13 +70,21 @@ export class ItemsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (!params) {
         this.firebaseItemService.getItemList().take(1).subscribe(
-          (items) => this.items = items
+          (items) => {
+            this.items = items;
+            this.loaded = true;
+            this.setColumnNo();
+          }
         );
         return;
       }
       this.filter.types = params.type;
       this.firebaseItemService.getItemList(this.filter, params.search).take(1).subscribe(
-        (items) => this.items = items
+        (items) => {
+          this.items = items;
+          this.loaded = true;
+          this.setColumnNo();
+        }
       );
     });
   }

@@ -26,8 +26,7 @@ export class FirebaseTypeService {
       (types) => {
         const alteredTypesArray = [];
         _.each(types, (value, key) => {
-          const newType = new Type(value);
-          newType.id = key;
+          const newType = new Type({ ...value, id: key});
           alteredTypesArray.push(newType);
         });
 
@@ -35,6 +34,12 @@ export class FirebaseTypeService {
 
         return alteredTypesArray;
       }
+    );
+  }
+
+  getTypeName(id: string) {
+    return this.db.object(`/types/${id}`).valueChanges().take(1).map(
+      (type) => _.get(type, 'name', null)
     );
   }
 

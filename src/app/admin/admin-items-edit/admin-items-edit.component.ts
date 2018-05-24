@@ -20,6 +20,7 @@ import { Config } from '../../../config/config';
 })
 export class AdminItemsEditComponent {
   data: Item = new Item({});
+  loaded = false;
   types: any;
 
   constructor(
@@ -87,6 +88,11 @@ export class AdminItemsEditComponent {
     this.firebaseItemService.getItem(id).take(1).subscribe(
       (itemData) => {
         this.data = itemData;
+        this.loaded = true;
+      },
+      (error: Error) => {
+        this.alertService.errorAlert(error.message);
+        this.loaded = true;
       }
     );
   }

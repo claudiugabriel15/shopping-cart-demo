@@ -20,7 +20,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private firebaseOrdersService: FirebaseOrdersService,
-    private config: Config
+    public config: Config
   ) {}
 
   ngOnInit() {

@@ -16,7 +16,7 @@ export class AlertService {
 
   private openSnackBar(message: string, panelClass: string) {
     this.snackBar.open(message + '!', null, {
-      duration: 2000,
+      duration: 3000,
       panelClass: panelClass
     });
   }

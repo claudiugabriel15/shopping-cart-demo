@@ -1,29 +1,30 @@
 import { Subscription } from 'rxjs/Subscription';
 import { RatingService } from './../../services/rating.service';
 import { FirebaseShoppingCartService } from './../../services/firebase-shopping-cart.service';
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, SimpleChange, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, SimpleChange } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../../../config/config';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-item-card',
   templateUrl: './item-card.component.html',
   styleUrls: ['./item-card.component.css']
 })
-export class ItemCardComponent implements OnInit, OnDestroy {
+export class ItemCardComponent implements OnInit {
   @Input() data: any;
   @Input() quantity: boolean;
 
   @Output('remove') remove = new EventEmitter<any>();
   @Output('add') add = new EventEmitter<any>();
-  @Output('card-click') cardClick = new EventEmitter<any>();
-
-  avgRating = 0;
+  @Output('cardClick') cardClick = new EventEmitter<any>();
 
   hasRemoveFunctionality: boolean;
   hasAddFunctionality: boolean;
   hasClickFunctionality: boolean;
   cartItemQuantity: Observable<any>;
+  rating: Observable<any>;
   ratingSubscription: Subscription;
 
   constructor(
@@ -41,17 +42,7 @@ export class ItemCardComponent implements OnInit, OnDestroy {
       this.cartItemQuantity = this.shoppingCartService.getItemQuantity(this.data);
     }
 
-    this.ratingSubscription = this.ratingService.getAvgRating(this.data.id).subscribe((value) => {
-      if (value && value.avgRating) {
-        this.avgRating = value.avgRating;
-        return;
-      }
-      this.avgRating = 0;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.ratingSubscription.unsubscribe();
+    this.rating = this.ratingService.getRating(this.data.id);
   }
 
   removeItem() {
