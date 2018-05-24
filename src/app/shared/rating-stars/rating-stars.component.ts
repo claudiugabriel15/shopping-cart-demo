@@ -10,12 +10,14 @@ import * as _ from 'lodash';
 })
 export class RatingStarsComponent implements OnInit, OnChanges {
   @Input() readonly = true;
+  // tslint:disable-next-line:no-input-rename
   @Input('rating') ratingObj: Rating;
   @Input() floatLeft?: boolean;
 
   @Output() edit = new EventEmitter<any>();
 
   rating: number;
+  hovered: number;
 
   constructor() { }
 

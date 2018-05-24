@@ -120,14 +120,14 @@ export class ItemsComponent implements OnInit {
     this.router.navigate(['items'], { queryParams: newQueryParams });
   }
 
-  private updateFromPriceParam() {
+  public updateFromPriceParam() {
     const currentQueryParams = this.route.snapshot.queryParams;
     const newQueryParams = _.clone(currentQueryParams);
     newQueryParams['fromPrice'] = this.filter.price.fromPrice;
     this.router.navigate(['items'], { queryParams: newQueryParams });
   }
 
-  private updateToPriceParam() {
+  public updateToPriceParam() {
     const currentQueryParams = this.route.snapshot.queryParams;
     const newQueryParams = _.clone(currentQueryParams);
     newQueryParams['toPrice'] = this.filter.price.toPrice;

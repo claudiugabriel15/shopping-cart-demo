@@ -92,7 +92,7 @@ export class ShoppingCartComponent {
     this.firebaseShoppingCartService.removeMultipleItems(item);
   }
 
-  private goToItemPage(item: Item) {
+  goToItemPage(item: Item) {
     this.router.navigateByUrl(`items/${item.id}`);
   }
 }

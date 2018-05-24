@@ -28,3 +28,8 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+
+.no-search-results {
+  padding: 50px;
+  font-size: 3vh;
+}

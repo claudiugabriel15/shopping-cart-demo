@@ -44,6 +44,9 @@
           (change)="editItem(element)" (keyup)="editItem(element)" [disabled]="displayOnly">
 
       </mat-cell>
+      <mat-cell >
+        <div class="no-search-results"><strong>No results.</strong></div>
+      </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" [ngClass]="{'even-row': i % 2 === 0}"></mat-row>
