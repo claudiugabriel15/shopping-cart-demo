@@ -29,6 +29,7 @@ export class FirebaseOrdersService {
 
   addOrder(order: Order) {
     const uid = this.getStoredUserId();
+    order.userId = uid;
 
     return this.db.list(`/orders/${uid}/`).push(order);
   }
@@ -96,10 +97,18 @@ export class FirebaseOrdersService {
     );
   }
 
-  setShipped(order: Order, value?: boolean) {
+  setShipped(order: Order) {
     return this.db.object(`/orders/${order.userId}/${order.id}`).update({
-      'shipped': value || true,
+      'shipped': true,
       'shipDate': Date.now()
+    }).then(() => {
+
+      // should update server-side
+      _.each(order.items, (item) => {
+        this.db.object(`/items/${item.id}`).update({
+          'quantity': item.quantity - item.cartQuantity
+        });
+      });
     });
   }
 }
