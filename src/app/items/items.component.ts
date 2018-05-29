@@ -25,8 +25,22 @@ export class ItemsComponent implements OnInit {
       fromPrice: '',
       toPrice: ''
     },
+    sortBy: {
+      value: '',
+      desc: false
+    },
     types: []
   };
+  sortCriteria = [
+    {
+      value: 'price',
+      label: 'Price'
+    },
+    {
+      value: 'quantity',
+      label: 'Stock'
+    }
+  ];
   selectedTypes: string[];
   searchInput: string;
   screenWidth: number;
@@ -79,6 +93,9 @@ export class ItemsComponent implements OnInit {
         return;
       }
       this.filter.types = params.type;
+      this.filter.sortBy.value = params.sort;
+      this.filter.sortBy.desc = (params.desc === 'true');
+
       this.firebaseItemService.getItemList(this.filter, params.search).take(1).subscribe(
         (items) => {
           this.items = items;
@@ -114,24 +131,38 @@ export class ItemsComponent implements OnInit {
   }
 
   public addSearchParam() {
-    const currentQueryParams = this.route.snapshot.queryParams;
-    const newQueryParams = _.clone(currentQueryParams);
+    const newQueryParams = this.getQueryParams();
     newQueryParams['search'] = this.searchInput;
     this.router.navigate(['items'], { queryParams: newQueryParams });
   }
 
   public updateFromPriceParam() {
-    const currentQueryParams = this.route.snapshot.queryParams;
-    const newQueryParams = _.clone(currentQueryParams);
+    const newQueryParams = this.getQueryParams();
     newQueryParams['fromPrice'] = this.filter.price.fromPrice;
     this.router.navigate(['items'], { queryParams: newQueryParams });
   }
 
   public updateToPriceParam() {
-    const currentQueryParams = this.route.snapshot.queryParams;
-    const newQueryParams = _.clone(currentQueryParams);
+    const newQueryParams = this.getQueryParams();
     newQueryParams['toPrice'] = this.filter.price.toPrice;
     this.router.navigate(['items'], { queryParams: newQueryParams });
+  }
+
+  public updateSortParam() {
+    const newQueryParams = this.getQueryParams();
+    newQueryParams['sort'] = this.filter.sortBy.value;
+    this.router.navigate(['items'], { queryParams: newQueryParams });
+  }
+
+  public updateSortDescParam() {
+    const newQueryParams = this.getQueryParams();
+    newQueryParams['desc'] = this.filter.sortBy.desc;
+    this.router.navigate(['items'], { queryParams: newQueryParams });
+  }
+
+  private getQueryParams() {
+    const currentQueryParams = this.route.snapshot.queryParams;
+    return _.clone(currentQueryParams);
   }
 
   private addToCart(item: Item) {

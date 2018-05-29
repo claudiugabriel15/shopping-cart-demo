@@ -56,6 +56,23 @@
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Sort by
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div fxLayout="column">
+            <mat-radio-group fxLayout="column" [(ngModel)]="filter.sortBy.value" (ngModelChange)="updateSortParam()">
+              <mat-radio-button *ngFor="let sortCrit of sortCriteria" [value]="sortCrit.value">
+                {{ sortCrit.label }}
+              </mat-radio-button>
+            </mat-radio-group>
+            <mat-checkbox [(ngModel)]="filter.sortBy.desc" (ngModelChange)="updateSortDescParam()">Descending</mat-checkbox>
+          </div>
+        </mat-expansion-panel>
       </div>
 
       <div fxHide fxShow.gt-md fxLayout="column" fxLayoutAlign="center center">

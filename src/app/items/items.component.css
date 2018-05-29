@@ -6,7 +6,7 @@
 }
 .selection-list {
   position: sticky;
-  top: 20%;
+  top: 92px;
   z-index: 1;
   background-color: white;
 }
@@ -26,7 +26,7 @@
 }
 
 .price-filter-input {
-  max-width: 180px;
+  max-width: 50%;
 }
 
 @media screen and (min-width: 1280px) {

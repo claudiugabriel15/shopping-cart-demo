@@ -36,6 +36,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -245,6 +246,7 @@ export function initConfig(config: Config) {
     MatSliderModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatCheckboxModule,
 
     // Flex Modules
     FlexLayoutModule,

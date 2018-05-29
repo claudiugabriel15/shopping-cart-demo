@@ -51,6 +51,9 @@ export class FirebaseItemService {
         this.filter(filter, alteredItemArray);
         this.search(search, alteredItemArray);
 
+        if (filter && !_.isEmpty(filter.sortBy)) {
+          return _.orderBy(alteredItemArray, [filter.sortBy.value], [filter.sortBy.desc ? 'desc' : 'asc']);
+        }
         return alteredItemArray;
       }
     );
