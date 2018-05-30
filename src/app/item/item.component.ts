@@ -26,7 +26,7 @@ export class ItemComponent implements OnInit {
   columnNo = 1;
 
   @ViewChild('gridList') gridListElem: ElementRef;
-
+  @ViewChild('itemDescription') itemDescriptionElem: ElementRef;
   @HostListener('window:resize', ['$event']) onResize(event) {
     this.setColumnNo();
   }
@@ -62,7 +62,10 @@ export class ItemComponent implements OnInit {
   }
 
   private scrollToTop() {
-    window.scrollTo(0, 0);
+    const element = _.get(this, 'itemDescriptionElem.nativeElement', null);
+    if (element) {
+      element.scrollIntoView();
+    }
   }
 
   private setObservables(itemData: Item) {

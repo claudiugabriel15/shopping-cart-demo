@@ -2,10 +2,12 @@
   padding: 40px 0px;
 }
 
-.mat-drawer-container.mat-sidenav-container {
-  height: 100%;
-  position: fixed;
-  z-index: 2;
+.active-link {
+  background-color: rgba(0,0,0,.12);
+}
+
+.mat-drawer-container {
+  height: calc(100vh - 40px);
 }
 
 .mat-drawer {

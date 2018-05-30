@@ -1,23 +1,35 @@
 <form #f="ngForm" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between start" class="app-container">
   <ng-content></ng-content>
   <mat-form-field fxFlex="100">
-    <input matInput type="text" placeholder="City" [(ngModel)]="model.city" name="City" [required]="required" [disabled]="disabled">
+    <input matInput type="text" placeholder="City" [(ngModel)]="model.city" name="City" [required]="required" [disabled]="disabled" #City="ngModel">
+    <mat-hint *ngIf="City.touched && City.invalid" align="start">
+      <strong *ngIf="City?.errors.required"  class="validation-error">Field is required.</strong>
+    </mat-hint>
   </mat-form-field>
   <mat-form-field fxFlex="100">
     <input matInput type="text" placeholder="Country" name="Country" [(ngModel)]="model.country" (change)="updateCountriesList()"
-    (keyup)="updateCountriesList()" [required]="required" [matAutocomplete]="auto" [disabled]="disabled">
+    (keyup)="updateCountriesList()" [required]="required" [matAutocomplete]="auto" [disabled]="disabled" #Country="ngModel">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let country of countriesList" [value]="country.name">
         <img style="vertical-align:middle;" aria-hidden src="{{ country.flag }}" height="25"/>
         <span>{{ country.name }}</span>
       </mat-option>
     </mat-autocomplete>
+    <mat-hint *ngIf="Country.touched && Country.invalid" align="start">
+      <strong *ngIf="Country?.errors.required"  class="validation-error">Field is required.</strong>
+    </mat-hint>
   </mat-form-field>
   <mat-form-field fxFlex="100">
-    <textarea matInput type="text" placeholder="Address" [(ngModel)]="model.address" name="Address" [required]="required" [disabled]="disabled"></textarea>
+    <textarea matInput type="text" placeholder="Address" [(ngModel)]="model.address" name="Address" [required]="required" [disabled]="disabled" #Address="ngModel"></textarea>
+    <mat-hint *ngIf="Address.touched && Address.invalid" align="start">
+      <strong *ngIf="Address?.errors.required"  class="validation-error">Field is required.</strong>
+    </mat-hint>
   </mat-form-field>
   <mat-form-field fxFlex="100">
-    <input matInput type="text" placeholder="Zip Code" [(ngModel)]="model.zipCode" name="Zip Code" [required]="required" [disabled]="disabled">
+    <input matInput type="text" placeholder="Zip Code" [(ngModel)]="model.zipCode" name="ZipCode" [required]="required" [disabled]="disabled" #ZipCode="ngModel">
+    <mat-hint *ngIf="ZipCode.touched && ZipCode.invalid" align="start">
+      <strong *ngIf="ZipCode?.errors.required"  class="validation-error">Field is required.</strong>
+    </mat-hint>
   </mat-form-field>
 
   <button *ngIf="!disabled" fxFlex="100" fxFlex.gt-sm="20" mat-raised-button color="primary" (click)="submitForm(f)" type="submit">Order</button>

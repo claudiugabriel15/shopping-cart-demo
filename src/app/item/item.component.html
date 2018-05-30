@@ -4,7 +4,7 @@
     fxLayout.gt-sm="row" fxFlex.gt-sm="60" fxLayoutAlign.gt-sm="center stretch" class="app-container background-color" fxLayoutGap.gt-sm="0px">
 
     <div fxFlex="90" fxFlex.gt-sm="20" fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.gt-sm="space-between start">
-      <div fxFlex="50">
+      <div fxFlex="50" #itemDescription>
         <h2>{{ data.name }}</h2>
         <div class="mat-title">{{ typeName | async}}</div>
         <div class="mat-subheading-2"><strong>{{ data.price | currency: config.get('currency')}}</strong></div>

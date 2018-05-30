@@ -9,7 +9,7 @@
       <mat-tab label="Order Overview">
         <app-enhanced-table class="order-items-table" [columns]="columns" [rows]="rows" [displayOnly]="true"></app-enhanced-table>
         <div fxFlex fxLayout="row" fxLayoutAlign="end">
-          <h3 class="cost-section">Cost: {{ totalCost }}</h3>
+          <h3 class="cost-section">Cost: {{ totalCost | currency: config.get('currency')}}</h3>
         </div>
       </mat-tab>
     </mat-tab-group>

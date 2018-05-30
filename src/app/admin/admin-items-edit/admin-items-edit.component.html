@@ -57,15 +57,17 @@
     <mat-tab label="Item Images">
       <div class="app-container">
         <mat-grid-list cols="4" rowHeight="100px" gutterSize="15px">
-          <mat-grid-tile *ngFor="let image of data.images" (click)="removeImage(image)">
+          <mat-grid-tile *ngFor="let image of data.images;let i = index" (click)="removeImage(image, i)" (mouseenter)='image.hover = true' (mouseleave)='image.hover = false'>
             <img [src]="image.imageUrl" class="item-image">
+            <div [hidden]="image.hover !== true || i === 0" class="delete-background"></div>
+            <mat-icon [hidden]="image.hover !== true || i === 0" class="delete-image-icon">clear_outline</mat-icon>
           </mat-grid-tile>
 
           <mat-grid-tile
-              [style.background-color]="'lightgray'"
-              [style.cursor]="'pointer'"
-              (click)="addImage()">
-              <mat-icon>add_circle_outline</mat-icon>
+            [style.background-color]="'lightgray'"
+            [style.cursor]="'pointer'"
+            (click)="addImage()">
+            <mat-icon>add_circle_outline</mat-icon>
           </mat-grid-tile>
         </mat-grid-list>
       </div>

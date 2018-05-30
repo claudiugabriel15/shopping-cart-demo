@@ -119,14 +119,16 @@ export class AdminItemsEditComponent {
     });
   }
 
-  removeImage(image: any) {
-    this.firebaseItemService.removeImage(this.data.id, _.get(image, 'id', null)).then(
-      () => {
-        this.alertService.successAlert('Image removed');
-        this.getItemData(this.data.id);
-      },
-      () => {
-        this.alertService.successAlert('Could not remove image');
-    });
+  removeImage(image: any, index: number) {
+    if (index) {
+      this.firebaseItemService.removeImage(this.data.id, _.get(image, 'id', null)).then(
+        () => {
+          this.alertService.successAlert('Image removed');
+          this.getItemData(this.data.id);
+        },
+        () => {
+          this.alertService.successAlert('Could not remove image');
+      });
+    }
   }
 }

@@ -12,9 +12,18 @@ form {
 
 .item-image {
   width: 100%;
+}
+
+.delete-background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #ff000040;
   cursor: pointer;
 }
 
-.item-image:hover {
-  background-color: red;
+.delete-image-icon {
+  position: absolute;
+  color: white;
+  cursor: pointer;
 }

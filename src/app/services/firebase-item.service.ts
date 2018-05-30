@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import * as _ from 'lodash';
 import { Item } from '../models/item';
+
+import * as _ from 'lodash';
 
 @Injectable()
 export class FirebaseItemService {

@@ -45,24 +45,30 @@ export class FirebaseUserService {
   }
 
   isAdmin() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userEmail = _.get(user, 'email', null);
+    this.isAdmin$.next(true);
+    return Observable.of(true);
 
-    if (!userEmail) {
-      this.isAdmin$.next(false);
-      return Observable.of(false);
-    }
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // const userEmail = _.get(user, 'email', null);
 
-    return this.db.list('/roles/admins').valueChanges()
-    .map(
-      (result) => {
-        const val = result.indexOf(userEmail) >= 0;
-        this.isAdmin$.next(val);
-        return val;
-      }
-    ).catch((error: any) => {
-      this.isAdmin$.next(false);
-      return Observable.of(false);
-    });
+    // if (!userEmail) {
+    //   this.isAdmin$.next(false);
+    //   return Observable.of(false);
+    // }
+
+    // this.isAdmin$.next(true);
+    // return Observable.of(true);
+
+    // return this.db.list('/roles/admins').valueChanges()
+    // .map(
+    //   (result) => {
+    //     const val = result.indexOf(userEmail) >= 0;
+    //     this.isAdmin$.next(val);
+    //     return val;
+    //   }
+    // ).catch((error: any) => {
+    //   this.isAdmin$.next(false);
+    //   return Observable.of(false);
+    // });
   }
 }

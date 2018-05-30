@@ -58,6 +58,6 @@
     line-height: 1.5;
   }
   .carousel-control-prev, .carousel-control-next {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 80px);
   }
 }

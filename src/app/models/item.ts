@@ -23,6 +23,13 @@ export class Item {
 
   private buildItemsArray(images) {
     const imageArray = [];
+
+    if (this.imageURL) {
+      imageArray.push({
+        imageUrl: this.imageURL
+      });
+    }
+
     if (images) {
       Object.keys(images).forEach(key => {
         const value = images[key];

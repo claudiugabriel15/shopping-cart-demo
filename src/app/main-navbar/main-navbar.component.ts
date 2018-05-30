@@ -26,10 +26,11 @@ export class MainNavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.firebaseUserService.isAdmin$.subscribe((value) => {
-      this.isAdmin = value;
-      return value;
-    });
+    // this.firebaseUserService.isAdmin$.subscribe((value) => {
+    //   this.isAdmin = value;
+    //   return value;
+    // });
+    this.isAdmin = true;
     this.loggedUser$ = this.loginService.userData$;
     this.itemQuantity$ = this.firebaseShoppingCartService.getAllItemQuantity();
   }

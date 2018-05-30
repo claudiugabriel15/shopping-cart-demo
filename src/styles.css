@@ -18,6 +18,7 @@ a:hover {
 
 body {
   margin: 0px;
+  height: 100vh;
 }
 
 .mat-snack-bar-container.success {

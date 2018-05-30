@@ -1,14 +1,15 @@
 <app-main-navbar></app-main-navbar>
-<div>
-  <mat-sidenav-container fxHide fxShow.lt-md class="mat-elevation-z8">
-    <mat-sidenav mode="side" [(opened)]="sidebarService.isOpened">
-      <mat-nav-list>
-        <a mat-list-item routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" (click)="sidebarService.toggle()">Home</a>
-        <mat-divider></mat-divider>
-        <a mat-list-item routerLink="items" routerLinkActive="active-link" (click)="sidebarService.toggle()">Items</a>
-        <mat-divider></mat-divider>
-      </mat-nav-list>
-    </mat-sidenav>
-  </mat-sidenav-container>
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav mode="over" [(opened)]="sidebarService.isOpened">
+    <mat-nav-list>
+      <a mat-list-item routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" (click)="sidebarService.toggle()">Home</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="items" routerLinkActive="active-link" (click)="sidebarService.toggle()">Items</a>
+      <mat-divider></mat-divider>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
